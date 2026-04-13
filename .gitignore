@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.env
+.DS_Store
+*.log
+.sixth/
+presentation-app/node_modules/
+presentation-app/dist/

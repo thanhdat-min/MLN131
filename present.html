@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dân Chủ Xã Hội Chủ Nghĩa & Không Gian Mạng</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #c0392b;
+            --accent: #f1c40f;
+            --bg-dark: #0f172a;
+            --bg-card: rgba(30, 41, 59, 0.7);
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --gradient: linear-gradient(135deg, #c0392b 0%, #8e44ad 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+        }
+
+        /* --- Scroll Snap Container --- */
+        .presentation-container {
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+        }
+
+        section {
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 2rem;
+            scroll-snap-align: start;
+            position: relative;
+        }
+
+        .content-wrapper {
+            max-width: 1000px;
+            width: 100%;
+            z-index: 2;
+        }
+
+        /* --- Custom Background Elements --- */
+        .bg-glow {
+            position: absolute;
+            width: 40vw;
+            height: 40vw;
+            background: radial-gradient(circle, rgba(192, 57, 43, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(50px);
+            z-index: 1;
+        }
+
+        .glow-1 { top: -10%; left: -10%; }
+        .glow-2 { bottom: -10%; right: -10%; }
+
+        /* --- Hero Section --- */
+        .hero {
+            background: radial-gradient(circle at center, rgba(15, 23, 42, 0.8) 20%, var(--bg-dark) 100%);
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            background: linear-gradient(to right, #fff, #f1c40f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-dim);
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        .cta-btn {
+            padding: 1rem 2.5rem;
+            background: var(--gradient);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: inline-block;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(192, 57, 43, 0.4);
+        }
+
+        /* --- Cards & Grid --- */
+        .glass-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            transition: transform 0.5s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(241, 196, 15, 0.3);
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 2rem;
+            border-right: 1px solid var(--glass-border);
+        }
+
+        .stat-item:last-child { border-right: none; }
+
+        /* --- Timeline --- */
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--glass-border);
+            z-index: 1;
+        }
+
+        .timeline-item {
+            flex: 1;
+            text-align: center;
+            z-index: 2;
+        }
+
+        .circle {
+            width: 40px;
+            height: 40px;
+            background: var(--bg-dark);
+            border: 3px solid var(--primary);
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item:hover .circle {
+            background: var(--primary);
+            box-shadow: 0 0 20px var(--primary);
+        }
+
+        /* --- Comparison Table --- */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2rem;
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 1.25rem;
+            border-bottom: 1px solid var(--glass-border);
+            text-align: left;
+        }
+
+        .comparison-table th {
+            color: var(--accent);
+            font-size: 1.1rem;
+        }
+
+        /* --- Navigation dots --- */
+        .nav-dots {
+            position: fixed;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            z-index: 100;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            background: var(--accent);
+            transform: scale(1.5);
+        }
+
+        /* --- Animations --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease-out;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Responsive --- */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .grid-3 { grid-template-columns: 1fr; }
+            .timeline { flex-direction: column; gap: 2rem; }
+            .timeline::before { display: none; }
+            section { height: auto; min-height: 100vh; padding: 6rem 1rem; }
+            .presentation-container { scroll-snap-type: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="nav-dots" id="navDots">
+        <div class="dot active" onclick="scrollToSection(0)"></div>
+        <div class="dot" onclick="scrollToSection(1)"></div>
+        <div class="dot" onclick="scrollToSection(2)"></div>
+        <div class="dot" onclick="scrollToSection(3)"></div>
+        <div class="dot" onclick="scrollToSection(4)"></div>
+        <div class="dot" onclick="scrollToSection(5)"></div>
+        <div class="dot" onclick="scrollToSection(6)"></div>
+    </div>
+
+    <div class="presentation-container" id="scrollContainer">
+        
+        <!-- Section 1: Hero -->
+        <section class="hero" id="sec0">
+            <div class="bg-glow glow-1"></div>
+            <div class="content-wrapper reveal visible">
+                <h1>Bản chất Dân chủ <br> & Không gian mạng</h1>
+                <p>Phân tích từ lý luận Mác-Lênin về quyền lực nhân dân trong kỷ nguyên số.</p>
+                <div class="grid-3" style="margin-top: 3rem;">
+                    <div class="stat-item">
+                        <h3 style="color: var(--accent)">CHÍNH TRỊ</h3>
+                        <p style="font-size: 0.9rem">Quyền lực đa số</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3 style="color: var(--accent)">KINH TẾ</h3>
+                        <p style="font-size: 0.9rem">Sở hữu xã hội</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3 style="color: var(--accent)">VĂN HÓA</h3>
+                        <p style="font-size: 0.9rem">Giải phóng con người</p>
+                    </div>
+                </div>
+                <a href="#sec1" class="cta-btn" style="margin-top: 3rem;">Bắt đầu khám phá</a>
+            </div>
+        </section>
+
+        <!-- Section 2: Sự tiến hóa -->
+        <section id="sec1">
+            <div class="content-wrapper reveal">
+                <h2 style="color: var(--accent); margin-bottom: 2rem;">Tiến trình phát triển Dân chủ</h2>
+                <div class="glass-card">
+                    <p>Lịch sử dân chủ là quá trình chuyển dịch của quyền lực gắn liền với các phương thức sản xuất.</p>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="circle">1</div>
+                            <h4>Cổ đại</h4>
+                            <p style="font-size: 0.8rem; color: var(--text-dim)">Chủ nô hữu hạn</p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="circle">2</div>
+                            <h4>Phong kiến</h4>
+                            <p style="font-size: 0.8rem; color: var(--text-dim)">Quyền lực tuyệt đối</p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="circle">3</div>
+                            <h4>Tư sản</h4>
+                            <p style="font-size: 0.8rem; color: var(--text-dim)">Tự do hình thức</p>
+                        </div>
+                        <div class="timeline-item" style="color: var(--accent)">
+                            <div class="circle" style="border-color: var(--accent)">4</div>
+                            <h4>XHCN</h4>
+                            <p style="font-size: 0.8rem;">Dân chủ thực chất</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Bản chất Dân chủ XHCN -->
+        <section id="sec2">
+            <div class="bg-glow glow-2"></div>
+            <div class="content-wrapper reveal">
+                <h2 style="margin-bottom: 2rem;">Bản chất cốt lõi của Dân chủ XHCN</h2>
+                <div class="grid-3">
+                    <div class="glass-card">
+                        <h3 style="color: var(--primary)">Chính trị</h3>
+                        <p style="margin-top: 1rem; font-size: 0.95rem;">Lãnh đạo bởi Đảng Cộng sản, thực thi quyền lực của đại đa số nhân dân lao động. Nhà nước là công cụ để dân thực hiện quyền làm chủ.</p>
+                    </div>
+                    <div class="glass-card">
+                        <h3 style="color: var(--accent)">Kinh tế</h3>
+                        <p style="margin-top: 1rem; font-size: 0.95rem;">Dựa trên chế độ công hữu tư liệu sản xuất chủ yếu. Xóa bỏ bóc lột, đảm bảo công bằng trong phân phối thành quả lao động.</p>
+                    </div>
+                    <div class="glass-card">
+                        <h3 style="color: #4ade80">Tư tưởng</h3>
+                        <p style="margin-top: 1rem; font-size: 0.95rem;">Lấy chủ nghĩa Mác-Lênin làm kim chỉ nam. Coi con người là mục tiêu phát triển, giải phóng cá nhân trong sự hài hòa xã hội.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: So sánh -->
+        <section id="sec3">
+            <div class="content-wrapper reveal">
+                <h2 style="text-align: center; margin-bottom: 2rem;">Phân định Dân chủ Tư sản & XHCN</h2>
+                <div class="glass-card">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Đặc điểm</th>
+                                <th>Dân chủ Tư sản</th>
+                                <th>Dân chủ XHCN</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Chủ thể</td>
+                                <td>Thiểu số (Giai cấp tư sản)</td>
+                                <td>Đa số (Nhân dân lao động)</td>
+                            </tr>
+                            <tr>
+                                <td>Cơ sở sở hữu</td>
+                                <td>Tư hữu</td>
+                                <td>Công hữu chủ yếu</td>
+                            </tr>
+                            <tr>
+                                <td>Mục tiêu</td>
+                                <td>Duy trì áp bức</td>
+                                <td>Giải phóng con người</td>
+                            </tr>
+                            <tr>
+                                <td>Cơ chế</td>
+                                <td>Đa nguyên, cạnh tranh</td>
+                                <td>Tập trung dân chủ</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Phân tích Mạng xã hội -->
+        <section id="sec4">
+            <div class="content-wrapper reveal">
+                <h2 style="margin-bottom: 1.5rem;">Mạng xã hội: Công cụ hay Bản chất?</h2>
+                <div class="glass-card" style="border-left: 5px solid var(--accent)">
+                    <h4 style="color: var(--accent)">Nhận định: "Đây là biểu hiện cao nhất của dân chủ"</h4>
+                    <p style="font-weight: 600; font-size: 1.2rem; margin: 1rem 0;">KẾT LUẬN: ĐÚNG MỘT PHẦN</p>
+                    <div class="grid-3" style="grid-template-columns: 1fr 1fr; gap: 3rem;">
+                        <div>
+                            <h4 style="color: #4ade80">Vì sao Đúng?</h4>
+                            <ul style="list-style: none; font-size: 0.9rem; color: var(--text-dim)">
+                                <li style="margin-bottom: 0.5rem">✓ Mở rộng không gian dân chủ trực tiếp.</li>
+                                <li style="margin-bottom: 0.5rem">✓ Tăng cường giám sát cộng đồng.</li>
+                                <li style="margin-bottom: 1rem">✓ Thúc đẩy tự do ngôn luận nhanh chóng.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--primary)">Vì sao chưa đủ?</h4>
+                            <ul style="list-style: none; font-size: 0.9rem; color: var(--text-dim)">
+                                <li style="margin-bottom: 0.5rem">✗ Nhầm lẫn giữa phương tiện và bản chất.</li>
+                                <li style="margin-bottom: 0.5rem">✗ Mạng xã hội thiếu tính pháp lý cưỡng chế.</li>
+                                <li style="margin-bottom: 1rem">✗ Nguy cơ bị thao túng bởi tin giả & thế lực thù địch.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: Thao túng & Rủi ro -->
+        <section id="sec5">
+            <div class="bg-glow glow-1"></div>
+            <div class="content-wrapper reveal">
+                <h2 style="margin-bottom: 2rem;">Nguy cơ từ "Dân chủ ảo"</h2>
+                <div class="grid-3">
+                    <div class="glass-card" style="text-align: center">
+                        <div style="font-size: 2rem; margin-bottom: 1rem;">⚖️</div>
+                        <h3>Thiếu tính pháp lý</h3>
+                        <p style="font-size: 0.9rem; margin-top: 1rem;">Mạng xã hội chỉ tạo áp lực dư luận, không phải là thiết chế quyền lực ban hành pháp luật.</p>
+                    </div>
+                    <div class="glass-card" style="text-align: center">
+                        <div style="font-size: 2rem; margin-bottom: 1rem;">🤖</div>
+                        <h3>Nô lệ thuật toán</h3>
+                        <p style="font-size: 0.9rem; margin-top: 1rem;">Người dùng dễ bị thao túng tâm lý và định hướng bởi các tập đoàn công nghệ tư bản.</p>
+                    </div>
+                    <div class="glass-card" style="text-align: center">
+                        <div style="font-size: 2rem; margin-bottom: 1rem;">⚠️</div>
+                        <h3>Tin giả kiến tạo</h3>
+                        <p style="font-size: 0.9rem; margin-top: 1rem;">Dân chủ vô chính phủ có thể nảy sinh từ các thông tin sai lệch gây chia rẽ xã hội.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 7: Kết luận -->
+        <section id="sec6">
+            <div class="content-wrapper reveal">
+                <div class="glass-card" style="text-align: center; border: 2px solid var(--accent)">
+                    <h2 style="color: var(--accent); margin-bottom: 1.5rem;">Lời kết: Xây dựng dân chủ số vững mạnh</h2>
+                    <p style="margin-bottom: 2rem;">Mạng xã hội là "cánh cửa" mở ra cơ hội, nhưng "móng nhà" phải là chủ nghĩa Mác-Lênin và Nhà nước pháp quyền XHCN.</p>
+                    <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+                        <span style="background: rgba(255,255,255,0.1); padding: 0.5rem 1rem; border-radius: 5px;">Quản lý bằng pháp luật</span>
+                        <span style="background: rgba(255,255,255,0.1); padding: 0.5rem 1rem; border-radius: 5px;">Nâng cao văn hóa số</span>
+                        <span style="background: rgba(255,255,255,0.1); padding: 0.5rem 1rem; border-radius: 5px;">Giữ vững bản chất chế độ</span>
+                    </div>
+                    <p style="margin-top: 3rem; font-size: 0.8rem; color: var(--text-dim)">Nội dung tổng hợp theo chuyên đề CNXHKH - Tháng 4/2026</p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        const container = document.getElementById('scrollContainer');
+        const dots = document.querySelectorAll('.dot');
+        const sections = document.querySelectorAll('section');
+
+        // Scroll reveal logic
+        const observerOptions = {
+            threshold: 0.2
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.querySelector('.reveal').classList.add('visible');
+                    
+                    // Update dots
+                    const index = Array.from(sections).indexOf(entry.target);
+                    dots.forEach(dot => dot.classList.remove('active'));
+                    dots[index].classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => observer.observe(section));
+
+        function scrollToSection(index) {
+            sections[index].scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Mouse wheel custom handling for smoother snap
+        let isScrolling = false;
+        container.addEventListener('wheel', (e) => {
+            // Optional: Add custom logic if needed
+        }, { passive: true });
+    </script>
+</body>
+</html>
