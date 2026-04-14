@@ -1,400 +1,809 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import {
-  ChevronRight, ShieldAlert, Cpu, AlertTriangle,
-  BookOpen, Database, Target, ArrowRight,
-  MonitorSmartphone, Scale, Users, ThumbsUp, ThumbsDown,
-  Menu, X
+  ArrowRight,
+  BookOpen,
+  Building2,
+  CheckCircle2,
+  ChevronRight,
+  CircleDashed,
+  Cpu,
+  Landmark,
+  Scale,
+  ShieldCheck,
+  Speech,
+  Users,
 } from 'lucide-react';
 import { cn } from './lib/utils';
 
-// Reusable animated container for scroll reveals
-const FadeIn = ({ children, delay = 0, className, direction = "up" }) => {
-  const directions = {
-    up: { y: 40, opacity: 0 },
-    down: { y: -40, opacity: 0 },
-    left: { x: 40, opacity: 0 },
-    right: { x: -40, opacity: 0 }
-  };
+const navItems = [
+  { label: 'Tổng quan', href: '#tong-quan' },
+  { label: 'Lịch sử', href: '#lich-su' },
+  { label: 'Bản chất', href: '#ban-chat' },
+  { label: 'Đối chiếu', href: '#doi-chieu' },
+  { label: 'Không gian mạng', href: '#khong-gian-mang' },
+  { label: 'Kết luận', href: '#ket-luan' },
+];
 
-  return (
-    <motion.div
-      initial={directions[direction]}
-      whileInView={{ x: 0, y: 0, opacity: 1 }}
-      viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.7, delay, ease: "easeOut" }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  );
+const fadeUp = {
+  initial: { opacity: 0, y: 28 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: '-80px' },
+  transition: { duration: 0.65, ease: 'easeOut' },
 };
 
-// UI Components
-const Badge = ({ children, className }) => {
-  return (
-    <span className={cn("inline-flex items-center rounded-full px-3 py-1 text-xs font-bold uppercase tracking-widest", className)}>
-      {children}
-    </span>
-  );
-};
+const timeline = [
+  {
+    period: 'Cổ đại',
+    title: 'Nền dân chủ chủ nô',
+    image: 'https://commons.wikimedia.org/wiki/Special:FilePath/Pnyx%201.jpg',
+    sourceLabel: 'Wikimedia Commons - File:Pnyx 1.jpg',
+    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Pnyx_1.jpg',
+    content:
+      'Thuật ngữ dân chủ xuất hiện từ Hy Lạp cổ đại với hàm ý quyền lực thuộc về nhân dân, nhưng “nhân dân” khi ấy chỉ là một thiểu số thuộc giai cấp chủ nô, tăng lữ và thương gia. Đại bộ phận lao động là nô lệ không có quyền chính trị.',
+  },
+  {
+    period: 'Phong kiến',
+    title: 'Quyền lực tuyệt đối của quân chủ',
+    image: 'https://commons.wikimedia.org/wiki/Special:FilePath/BL%20Coronation%20Gospels.jpg',
+    sourceLabel: 'Wikimedia Commons - File:BL Coronation Gospels.jpg',
+    sourceUrl: 'https://commons.wikimedia.org/wiki/File:BL_Coronation_Gospels.jpg',
+    content:
+      'Trong xã hội phong kiến, quyền lực dân chủ bị thay thế bởi quyền lực tuyệt đối của nhà vua. Dân chúng chỉ là thần dân; quyền lực chính trị được hợp thức hóa bằng thiên mệnh và trật tự đẳng cấp.',
+  },
+  {
+    period: 'Cận đại',
+    title: 'Nền dân chủ tư sản',
+    image:
+      'https://commons.wikimedia.org/wiki/Special:FilePath/Norblin%20de%20la%20Gourdaine%20-%20The%20Oath%20of%20the%20Tennis%20Court%2C%201943.804.jpg',
+    sourceLabel: 'Wikimedia Commons - The Oath of the Tennis Court',
+    sourceUrl:
+      'https://commons.wikimedia.org/wiki/File:Norblin_de_la_Gourdaine_-_The_Oath_of_the_Tennis_Court,_1943.804.jpg',
+    content:
+      'Các cuộc cách mạng tư sản xác lập những giá trị tiến bộ như tự do, bình đẳng, bác ái và luật hóa quyền con người, quyền công dân. Tuy nhiên, nền dân chủ này vẫn đặt trên cơ sở tư hữu tư bản chủ nghĩa và phục vụ lợi ích của giai cấp tư sản.',
+  },
+  {
+    period: 'Đương đại',
+    title: 'Dân chủ xã hội chủ nghĩa',
+    image: 'https://commons.wikimedia.org/wiki/Special:FilePath/Congress%20of%20Soviets%20%281917%29.jpg',
+    sourceLabel: 'Wikimedia Commons - File:Congress of Soviets (1917).jpg',
+    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Congress_of_Soviets_(1917).jpg',
+    content:
+      'Dân chủ XHCN được xác lập sau Cách mạng Tháng Mười Nga năm 1917, kế thừa các giá trị tiến bộ trước đó nhưng chuyển quyền lực về đại đa số nhân dân lao động. Đây không chỉ là một giá trị chính trị mà còn là động lực giải phóng con người.',
+    highlight: true,
+  },
+];
 
-const Header = () => (
-  <header className="fixed top-0 w-full z-50 bg-black/50 backdrop-blur-md border-b border-white/10">
-    <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-      <div className="font-black text-2xl tracking-tighter text-white flex items-center gap-2">
-        <div className="w-8 h-8 bg-rose-600 rounded-lg flex items-center justify-center">
-          <Scale className="w-5 h-5 text-white" />
-        </div>
-        <span className="text-rose-500">MLN131</span>
-      </div>
-      <nav className="hidden md:flex gap-8 text-sm font-medium text-white/70">
-        <a href="#hero" className="hover:text-white transition-colors">Tổng Quan</a>
-        <a href="#history" className="hover:text-white transition-colors">Tiến Trình</a>
-        <a href="#compare" className="hover:text-white transition-colors">So Sánh</a>
-        <a href="#social" className="hover:text-white transition-colors">Không Gian Mạng</a>
-      </nav>
-      <button className="md:hidden text-white"><Menu /></button>
-    </div>
-  </header>
+const pillars = [
+  {
+    icon: Landmark,
+    title: 'Phương diện chính trị',
+    summary:
+      'Dân chủ XHCN mang bản chất giai cấp công nhân, được thực hiện thông qua sự lãnh đạo của Đảng Cộng sản và hệ thống chính trị mà trong đó mọi quyền hành thuộc về nhân dân.',
+    points: [
+      'Nhân dân lao động là chủ thể thực sự của quyền lực nhà nước.',
+      'Nhà nước XHCN là công cụ để nhân dân thực hiện quyền làm chủ.',
+      'Cán bộ, công chức phải tôn trọng, lắng nghe và phục vụ nhân dân.',
+    ],
+  },
+  {
+    icon: Building2,
+    title: 'Phương diện kinh tế',
+    summary:
+      'Cơ sở kinh tế của dân chủ XHCN là chế độ công hữu về các tư liệu sản xuất chủ yếu, bảo đảm nguồn lực quốc gia phục vụ lợi ích toàn xã hội chứ không tích lũy vào tay thiểu số.',
+    points: [
+      'Dân chủ kinh tế là nền tảng của các quyền dân chủ khác.',
+      'Nhân dân phải có thực quyền trong phân phối và quản lý lao động.',
+      'Mục tiêu là xóa bỏ bóc lột, hướng tới công bằng và phát triển bền vững.',
+    ],
+  },
+  {
+    icon: BookOpen,
+    title: 'Phương diện văn hóa - tư tưởng',
+    summary:
+      'Dân chủ XHCN lấy con người làm trung tâm, coi cá nhân vừa là chủ thể vừa là mục tiêu của phát triển, đồng thời nhấn mạnh trách nhiệm công dân và quá trình tự quản xã hội.',
+    points: [
+      'Kết hợp hệ tư tưởng Mác - Lênin với các giá trị tiến bộ của nhân loại.',
+      'Nâng cao dân trí, giác ngộ chính trị, văn hóa và chuyên môn.',
+      'Hướng đến sự phát triển tự do của mỗi người trong sự phát triển chung.',
+    ],
+  },
+];
+
+const compareRows = [
+  ['Chủ thể thực quyền', 'Giai cấp tư sản, thiểu số', 'Giai cấp công nhân và nhân dân lao động, đa số'],
+  ['Cơ sở kinh tế', 'Tư hữu tư liệu sản xuất', 'Công hữu đối với tư liệu sản xuất chủ yếu'],
+  ['Mục đích chính trị', 'Bảo vệ trật tự và lợi ích của giai cấp tư sản', 'Giải phóng con người, xây dựng xã hội mới'],
+  ['Cơ chế vận hành', 'Đa nguyên, cạnh tranh quyền lực', 'Tập trung dân chủ, có tổ chức và định hướng'],
+  ['Phạm vi thực thi', 'Thiên về quyền chính trị hình thức', 'Toàn diện trên chính trị, kinh tế, văn hóa, xã hội'],
+];
+
+const criteria = [
+  {
+    icon: Scale,
+    title: 'Thể chế hóa bằng Hiến pháp và pháp luật',
+    text:
+      'Quyền lực của nhân dân phải được cụ thể hóa bằng pháp luật, bằng quy chế, quyền hạn, trách nhiệm và cơ chế giám sát rõ ràng. Không cá nhân hay tổ chức nào đứng trên luật pháp.',
+  },
+  {
+    icon: Users,
+    title: 'Kết hợp dân chủ trực tiếp và gián tiếp',
+    text:
+      'Người dân vừa trực tiếp tham gia bàn bạc, giám sát và phản hồi ở cơ sở, vừa ủy quyền thông qua các cơ quan đại diện như Quốc hội và Hội đồng nhân dân các cấp.',
+  },
+  {
+    icon: Speech,
+    title: 'Vai trò của Mặt trận và các tổ chức chính trị - xã hội',
+    text:
+      'Quyền lực nhân dân chỉ mạnh khi được tổ chức thành sức mạnh hệ thống. Mặt trận và các đoàn thể có vai trò đại diện, giám sát, phản biện xã hội và tập hợp đồng thuận.',
+  },
+];
+
+const socialStrengths = [
+  'Mở rộng không gian dân chủ trực tiếp, giúp người dân tiếp cận thông tin và bày tỏ quan điểm nhanh hơn.',
+  'Tăng cường khả năng giám sát cộng đồng đối với các vụ việc tiêu cực và phản ánh từ cơ sở.',
+  'Giúp chính quyền gần dân hơn khi được sử dụng như kênh tiếp nhận phản ánh, góp ý và cung cấp dịch vụ công.',
+  'Hỗ trợ tập hợp trí tuệ tập thể, tạo áp lực dư luận tích cực trong phản biện xã hội.',
+];
+
+const socialLimits = [
+  'Không phải biểu hiện cao nhất của dân chủ XHCN vì bản chất dân chủ phải được thể hiện qua Nhà nước pháp quyền và các thiết chế quyền lực chính thức.',
+  'Không giải quyết được nền tảng kinh tế của quyền làm chủ, đặc biệt là vấn đề sở hữu tư liệu sản xuất.',
+  'Thiếu tính pháp lý cưỡng chế, nên bình luận hay kiến nghị trên mạng không đồng nghĩa với quyền lực nhà nước có hiệu lực thực thi.',
+  'Có nguy cơ bị thao túng bởi thuật toán, tâm lý đám đông, thông tin sai lệch hoặc bất bình đẳng số.',
+];
+
+const recommendations = [
+  'Tăng cường quản lý không gian mạng bằng pháp luật, bảo đảm tự do ngôn luận đi cùng kỷ cương và trách nhiệm.',
+  'Nâng cao dân trí, văn hóa số và năng lực phản biện xây dựng cho người dùng mạng xã hội.',
+  'Hoàn thiện cơ chế tiếp nhận, phản hồi và chuyển hóa các ý kiến hợp lý của người dân thành quy trình xử lý chính thức.',
+  'Kiên định mục tiêu tất cả quyền lực thuộc về nhân dân, lấy sự phát triển con người làm thước đo cao nhất.',
+];
+
+const sources = [
+  {
+    title: 'Tạp chí Cộng sản - Cần hiểu đúng về bản chất dân chủ, nhân quyền...',
+    url: 'https://www.tapchicongsan.org.vn/web/guest/dau-tranh-phan-bac-cac-luan-dieu-sai-trai-thu-dich/chi-tiet/-/asset_publisher/YqSB2JpnYto9/content/can-hieu-dung-ve-ban-chat-dan-chu-nhan-quyen-va-viec-loi-dung-dan-chu-nhan-quyen-de-chong-pha-viet-nam',
+  },
+  {
+    title: 'Bộ Tư pháp - Về nguyên tắc tất cả quyền lực nhà nước thuộc về nhân dân',
+    url: 'https://moj.gov.vn/qt/cacchuyenmuc/ctv/news/Pages/nghien-cuu-trao-doi.aspx?ItemID=10',
+  },
+  {
+    title: 'Lý luận Chính trị - Quan điểm của Đảng về thực hành dân chủ trong thời kỳ đổi mới',
+    url: 'https://lyluanchinhtri.vn/quan-diem-cua-dang-ve-thuc-hanh-dan-chu-trong-thoi-ky-doi-moi-2126.html',
+  },
+  {
+    title: 'Quản lý nhà nước - Vai trò của mạng xã hội trong quản lý xã hội đáp ứng yêu cầu cách mạng 4.0',
+    url: 'https://www.quanlynhanuoc.vn/2019/09/06/vai-tro-cua-mang-xa-hoi-trong-quan-ly-xa-hoi-dap-ung-yeu-cau-cuoc-cach-mang-4-0/',
+  },
+  {
+    title: 'Mặt trận Tổ quốc - Sử dụng mạng xã hội giúp chính quyền gần dân',
+    url: 'https://m.mattran.org.vn/hoat-dong-mat-tran-dia-phuong/su-dung-mang-xa-hoi-giup-chinh-quyen-gan-dan-10289.html',
+  },
+  {
+    title: 'README.md của dự án lưu toàn bộ danh mục tài liệu trích dẫn',
+    url: '#references-note',
+  },
+];
+
+const aiUsageItems = [
+  {
+    title: 'Công cụ AI và mục đích sử dụng',
+    body:
+      'Sử dụng AI để hỗ trợ tái cấu trúc nội dung học thuật thành giao diện web, gợi ý phân cấp thông tin, tinh chỉnh tiêu đề, nhịp chữ, bố cục thuyết trình và đề xuất cách trình bày phần đối chiếu, tiêu chí, kết luận.',
+  },
+  {
+    title: 'Prompt chính đã dùng',
+    body:
+      'Ví dụ prompt cốt lõi: “Tái cấu trúc nội dung README thành website trình bày mạch lạc, thể hiện rõ tiến trình lịch sử, bản chất dân chủ XHCN, tiêu chí quyền lực nhân dân, đánh giá vai trò mạng xã hội và phần kết luận; giữ phong cách học thuật, dễ thuyết trình”.',
+  },
+  {
+    title: 'Kết quả AI tạo ra',
+    body:
+      'AI đề xuất cấu trúc section, thẻ thông tin, bảng so sánh, cụm luận điểm, phụ lục tài liệu tham khảo và cách tổ chức lại phần kết luận để người xem dễ theo dõi hơn trên website.',
+  },
+  {
+    title: 'Phần sinh viên chỉnh sửa và hoàn thiện',
+    body:
+      'Người thực hiện chọn lọc nội dung từ README, sửa câu chữ, bỏ phần không phù hợp, bổ sung nguồn ảnh, quyết định bố cục cuối cùng, kiểm tra chính tả, điều chỉnh giọng văn và chịu trách nhiệm về toàn bộ phiên bản trình bày cuối.',
+  },
+];
+
+const integrityItems = [
+  'Cam kết bằng văn bản: AI chỉ là công cụ hỗ trợ, không thay thế toàn bộ quá trình học tập, phân tích và biên soạn.',
+  'Phân định rõ ràng giữa đầu ra AI và phần sinh viên chỉnh sửa, tổng hợp, kiểm tra và quyết định sử dụng.',
+  'Đối chiếu thông tin do AI gợi ý với giáo trình LLCT, nghị quyết, văn bản chính thống và các nguồn đã trích dẫn trên website.',
+];
+
+const officialChecks = [
+  {
+    title: 'Bộ Tư pháp',
+    detail: 'Đối chiếu nguyên tắc tất cả quyền lực nhà nước thuộc về nhân dân và yêu cầu xây dựng Nhà nước pháp quyền XHCN.',
+    url: 'https://moj.gov.vn/qt/cacchuyenmuc/ctv/news/Pages/nghien-cuu-trao-doi.aspx?ItemID=10',
+  },
+  {
+    title: 'Tạp chí Cộng sản',
+    detail: 'Đối chiếu lập luận về bản chất dân chủ, phát huy dân chủ gắn với kỷ luật, kỷ cương và vai trò của pháp luật.',
+    url: 'https://www.tapchicongsan.org.vn/web/guest/dau-tranh-phan-bac-cac-luan-dieu-sai-trai-thu-dich/chi-tiet/-/asset_publisher/YqSB2JpnYto9/content/can-hieu-dung-ve-ban-chat-dan-chu-nhan-quyen-va-viec-loi-dung-dan-chu-nhan-quyen-de-chong-pha-viet-nam',
+  },
+  {
+    title: 'Mặt trận Tổ quốc Việt Nam',
+    detail: 'Đối chiếu vai trò kết nối giữa chính quyền và người dân qua không gian mạng như một công cụ hỗ trợ, không thay thế thiết chế dân chủ.',
+    url: 'https://m.mattran.org.vn/hoat-dong-mat-tran-dia-phuong/su-dung-mang-xa-hoi-giup-chinh-quyen-gan-dan-10289.html',
+  },
+];
+
+const currentContextItems = [
+  {
+    title: 'Chuyển đổi số và tiếp cận người dân',
+    detail:
+      'Theo Cổng Thông tin Chính phủ, TPHCM triển khai các hoạt động hưởng ứng Ngày Chuyển đổi số quốc gia năm 2025 với trọng tâm “đi từng ngõ, gõ từng nhà, hướng dẫn từng người dân sử dụng dịch vụ, ứng dụng để phát triển kinh tế số”, cho thấy việc mở rộng sự tham gia của người dân trong không gian số đang gắn chặt với quản trị công và thực tiễn đời sống.',
+    url: 'https://tphcm.chinhphu.vn/tphcm-to-chuc-nhieu-hoat-dong-huong-ung-ngay-chuyen-doi-so-quoc-gia-nam-2025-101251016151123116.htm',
+  },
+  {
+    title: 'Hoàn thiện thể chế chính quyền địa phương',
+    detail:
+      'Luật số 72/2025/QH15 về tổ chức chính quyền địa phương được công bố trên Báo Điện tử Chính phủ ngày 27/03/2026 phản ánh yêu cầu tiếp tục hoàn thiện bộ máy nhà nước và cơ chế vận hành quyền lực ở cấp địa phương trong bối cảnh mới.',
+    url: 'https://xaydungchinhsach.chinhphu.vn/toan-van-luat-so-72-2025-qh15-to-chuc-chinh-quyen-dia-phuong-119250618161434371.htm',
+  },
+];
+
+const SectionBadge = ({ children }) => (
+  <span className="inline-flex items-center rounded-full border border-stone-700/80 bg-stone-900/80 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.28em] text-stone-300">
+    {children}
+  </span>
 );
 
-const HeroSection = () => (
-  <section id="hero" className="relative min-h-screen flex items-center pt-20">
-    <div className="absolute inset-0 z-0">
-      <img
-        src="https://images.unsplash.com/photo-1541873676-a18131494184?q=80&w=2000&auto=format&fit=crop"
-        alt="Hero Background"
-        className="w-full h-full object-cover opacity-30"
-      />
-      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/80 to-black" />
-    </div>
+const SectionHeading = ({ badge, title, description, align = 'left' }) => (
+  <motion.div
+    {...fadeUp}
+    className={cn('mb-14 max-w-3xl', align === 'center' && 'mx-auto text-center')}
+  >
+    <SectionBadge>{badge}</SectionBadge>
+    <h2 className="mt-5 font-serif text-4xl leading-tight text-stone-50 md:text-5xl">
+      {title}
+    </h2>
+    <p className="mt-5 text-lg leading-8 text-stone-400">{description}</p>
+  </motion.div>
+);
 
-    <div className="max-w-7xl mx-auto px-6 relative z-10 w-full py-20">
-      <div className="max-w-4xl">
-        <FadeIn>
-          <span className="inline-block py-1 px-3 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-400 text-sm font-bold uppercase tracking-widest mb-6">
-            Chuyên Đề Trọng Điểm
-          </span>
-        </FadeIn>
+const StatCard = ({ value, label }) => (
+  <div className="rounded-3xl border border-stone-800 bg-stone-950/80 p-6 shadow-[0_20px_80px_rgba(0,0,0,0.35)]">
+    <div className="font-serif text-4xl text-stone-50">{value}</div>
+    <div className="mt-2 text-sm uppercase tracking-[0.24em] text-stone-500">{label}</div>
+  </div>
+);
 
-        <FadeIn delay={0.1}>
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white leading-[1.1] tracking-tight mb-8">
-            Bản Chất Dân Chủ <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-red-600">
-              & Vai Trò Của Không Gian Mạng
-            </span>
-          </h1>
-        </FadeIn>
-
-        <FadeIn delay={0.2}>
-          <p className="text-xl md:text-2xl text-white/60 font-light max-w-2xl leading-relaxed mb-12">
-            Phân tích quyền lực của nhân dân trong kỷ nguyên số dựa trên góc nhìn thực tiễn và lý luận Mác-Lênin.
-          </p>
-        </FadeIn>
-
-        <FadeIn delay={0.3}>
-          <a href="#history" className="inline-flex items-center gap-2 bg-white text-black px-8 py-4 rounded-full font-bold hover:bg-rose-500 hover:text-white transition-all duration-300">
-            Khám phá tiến trình lịch sử
-            <ArrowRight className="w-5 h-5" />
+const App = () => {
+  return (
+    <div className="min-h-screen bg-[#120f0d] text-stone-100">
+      <div className="fixed inset-x-0 top-0 z-50 border-b border-white/8 bg-[#120f0d]/85 backdrop-blur-xl">
+        <div className="mx-auto flex h-[4.5rem] max-w-7xl items-center justify-between px-6">
+          <a href="#tong-quan" className="flex items-center gap-3">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-amber-700/40 bg-amber-500/10 text-amber-300">
+              <Scale className="h-5 w-5" />
+            </div>
+            <div>
+              <div className="text-xs uppercase tracking-[0.28em] text-stone-500">MLN131</div>
+              <div className="font-serif text-lg text-stone-100">Dân chủ và không gian mạng</div>
+            </div>
           </a>
-        </FadeIn>
-      </div>
 
-      {/* Core Values Cards Overlapping background */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-32">
-        {[
-          { icon: Target, title: "Chính Trị", desc: "Quyền lực tối thượng thuộc về đại đa số nhân dân lao động.", color: "text-rose-500", border: "border-rose-500/30" },
-          { icon: Database, title: "Kinh Tế", desc: "Dựa trên chế độ công hữu xã hội về tư liệu sản xuất.", color: "text-amber-500", border: "border-amber-500/30" },
-          { icon: BookOpen, title: "Văn Hóa", desc: "Giải phóng và phát triển toàn diện nhân cách con người.", color: "text-emerald-500", border: "border-emerald-500/30" }
-        ].map((item, i) => (
-          <FadeIn key={i} delay={0.4 + (i * 0.1)}>
-            <div className={cn("bg-black/50 backdrop-blur-md border p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300", item.border)}>
-              <item.icon className={cn("w-10 h-10 mb-6", item.color)} />
-              <h3 className="text-xl font-bold text-white mb-3 uppercase tracking-wider">{item.title}</h3>
-              <p className="text-white/60 leading-relaxed font-light">{item.desc}</p>
-            </div>
-          </FadeIn>
-        ))}
-      </div>
-    </div>
-  </section>
-);
-
-const HistorySection = () => {
-  const timeline = [
-    {
-      period: "Cổ Đại",
-      title: "Nền dân chủ chủ nô",
-      img: "/image/nha-nuoc-chu-no.jpg",
-      content: "Ra đời tại Hy Lạp cổ đại (Demoskratos). Dân chủ bị giới hạn hoàn toàn cho thiểu số là giai cấp chủ nô, tăng lữ. Lực lượng lao động chính là nô lệ bị tước đoạt toàn bộ quyền làm người, chỉ được coi là 'công cụ biết nói'."
-    },
-    {
-      period: "Phong Kiến",
-      title: "Quyền lực tuyệt đối",
-      img: "/image/article.jpg",
-      content: "Nhân loại bước vào quá trình lùi về dân chủ. Quyền lực tập trung vào tay một cá nhân duy nhất (Quân chủ, Vua chúa). Xã hội không tồn tại khái niệm công dân, chỉ có 'thần dân' và mệnh trời."
-    },
-    {
-      period: "Cận Đại",
-      title: "Nền dân chủ Tư sản",
-      img: "/image/Giai-cap-tu-san-va-he-tu-tuong-cua-giai-cap-tu-san.jpg",
-      content: "Bước tiến lịch sử thay thế thần quyền. Pháp điển hoá quyền tự do công dân, bình đẳng hình thức. Tuy nhiên, quyền lực thực chất nằm trong tay giới tinh hoa tài phiệt nắm giữ tư liệu sản xuất."
-    },
-    {
-      period: "Đương Đại",
-      title: "Dân chủ Xã hội Chủ nghĩa",
-      img: "/image/image.png",
-      content: "Thành tựu cao nhất mang tính thực tiễn. Đưa quyền lực trao trả về đại đa số nhân dân lao động bằng việc thay đổi tận gốc rễ cơ sở kinh tế tư hữu. Nhà nước biến thành công cụ phục vụ dân.",
-      highlight: true
-    }
-  ];
-
-  return (
-    <section id="history" className="py-32 relative bg-[#050505]">
-      <div className="max-w-7xl mx-auto px-6">
-        <FadeIn className="text-center mb-24 text-white">
-          <Badge className="mb-6 bg-white/5 border-white/10 text-white/50">Tiến trình lịch sử</Badge>
-          <h2 className="text-5xl md:text-7xl lg:text-8xl font-black uppercase tracking-tighter leading-[0.9]">
-            Sự Tiến Hóa<br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-500 via-amber-500 to-rose-600 drop-shadow-[0_0_30px_rgba(225,29,72,0.3)]">
-              Của Bộ Máy Quyền Lực
-            </span>
-          </h2>
-          <p className="mt-6 text-xl text-white/50 font-light max-w-2xl mx-auto">
-            Nhìn lại hành trình chuyển dịch vị thế làm chủ của nhân loại thông qua các phương thức sản xuất.
-          </p>
-        </FadeIn>
-
-        {/* Vertical Timeline */}
-        <div className="relative">
-          {/* Main vertical line */}
-          <div className="absolute left-[20px] md:left-1/2 top-0 bottom-0 w-[2px] bg-white/10 -ml-[1px]"></div>
-
-          <div className="space-y-24">
-            {timeline.map((node, i) => {
-              const isEven = i % 2 === 0;
-              return (
-                <div key={i} className="relative flex flex-col md:flex-row items-center justify-between w-full">
-                  {/* Timeline Node Dot */}
-                  <div className="absolute left-[20px] md:left-1/2 w-4 h-4 rounded-full bg-black border-2 border-rose-500 -ml-2 z-10 shadow-[0_0_15px_rgba(225,29,72,0.6)]"></div>
-
-                  {/* Left Column (Content vs Image depending on index) */}
-                  <FadeIn
-                    direction={isEven ? "right" : "left"}
-                    className={cn("w-full pl-16 md:pl-0 md:w-5/12", !isEven && "md:order-2")}
-                  >
-                    <div className={cn("md:text-right", !isEven && "md:text-left")}>
-                      <span className={cn("text-5xl font-black opacity-10 uppercase tracking-tighter absolute -z-10 -top-8",
-                        isEven ? "md:right-0 right-16" : "left-16 md:left-0",
-                        node.highlight && "text-rose-500 opacity-20"
-                      )}>
-                        {node.period}
-                      </span>
-                      <h4 className={cn("text-2xl font-bold text-white mb-4 uppercase tracking-wider", node.highlight && "text-rose-400")}>
-                        {node.title}
-                      </h4>
-                      <p className="text-white/60 font-light leading-relaxed text-lg bg-black/40 p-6 rounded-2xl border border-white/5 backdrop-blur">
-                        {node.content}
-                      </p>
-                    </div>
-                  </FadeIn>
-
-                  {/* Right Column (Image vs Empty/Spacer depending on index) */}
-                  <FadeIn
-                    direction={isEven ? "left" : "right"}
-                    className={cn("hidden md:block w-5/12", !isEven && "md:order-1")}
-                  >
-                    <div className="rounded-3xl overflow-hidden border border-white/10 aspect-video grayscale hover:grayscale-0 transition-all duration-700">
-                      <img src={node.img} alt={node.title} className="w-full h-full object-cover scale-105 hover:scale-100 transition-transform duration-700" />
-                    </div>
-                  </FadeIn>
-                </div>
-              );
-            })}
-          </div>
+          <nav className="hidden items-center gap-6 lg:flex">
+            {navItems.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                className="text-sm font-medium text-stone-400 transition-colors hover:text-stone-100"
+              >
+                {item.label}
+              </a>
+            ))}
+          </nav>
         </div>
       </div>
-    </section>
+
+      <main>
+        <section id="tong-quan" className="relative overflow-hidden pt-28">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(180,83,9,0.16),transparent_34%),radial-gradient(circle_at_80%_20%,rgba(153,27,27,0.18),transparent_24%),linear-gradient(180deg,#120f0d_0%,#171311_42%,#120f0d_100%)]" />
+          <div className="absolute inset-x-0 top-0 h-[520px] bg-[linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[length:64px_100%] opacity-[0.08]" />
+
+          <div className="relative mx-auto max-w-7xl px-6 pb-24 pt-16 md:pb-32 md:pt-24">
+            <div className="grid items-end gap-14 lg:grid-cols-[1.3fr_0.7fr]">
+              <motion.div {...fadeUp}>
+                <SectionBadge>Đề tài trọng tâm</SectionBadge>
+                <h1 className="mt-6 max-w-5xl font-serif text-5xl leading-[1.02] text-stone-50 md:text-7xl">
+                  Bản chất của nền dân chủ xã hội chủ nghĩa và vai trò của không gian mạng
+                </h1>
+                <p className="mt-8 max-w-3xl text-xl leading-9 text-stone-300">
+                  Nội dung được tổ chức lại theo mạch lập luận trong README.md, đi từ tiến trình lịch sử,
+                  bản chất của nền dân chủ XHCN, tiêu chí nhận diện quyền lực nhân dân đến việc phân tích
+                  nhận định về vai trò của mạng xã hội trong đời sống chính trị - xã hội.
+                </p>
+
+                <div className="mt-10 flex flex-wrap gap-4">
+                  <a
+                    href="#lich-su"
+                    className="inline-flex items-center gap-2 rounded-full bg-stone-100 px-7 py-3.5 text-sm font-semibold text-stone-950 transition-transform hover:-translate-y-0.5"
+                  >
+                    Xem toàn bộ mạch trình bày
+                    <ArrowRight className="h-4 w-4" />
+                  </a>
+                  <a
+                    href="#references"
+                    className="inline-flex items-center gap-2 rounded-full border border-stone-700 px-7 py-3.5 text-sm font-semibold text-stone-200 transition-colors hover:border-amber-500/50 hover:text-amber-200"
+                  >
+                    Tài liệu tham khảo
+                    <ChevronRight className="h-4 w-4" />
+                  </a>
+                </div>
+              </motion.div>
+
+              <motion.div
+                {...fadeUp}
+                transition={{ ...fadeUp.transition, delay: 0.12 }}
+                className="rounded-[32px] border border-stone-800 bg-stone-950/80 p-8 shadow-[0_30px_100px_rgba(0,0,0,0.45)]"
+              >
+                <div className="text-xs uppercase tracking-[0.28em] text-amber-300">Luận đề trung tâm</div>
+                <div className="mt-8 grid gap-4">
+                  {[
+                    'Tiến trình lịch sử của các hình thái dân chủ',
+                    'Ba phương diện cốt lõi của dân chủ XHCN',
+                    'Tiêu chí xác định quyền lực thực sự thuộc về nhân dân',
+                    'Phân tích nhận định về vai trò của mạng xã hội',
+                  ].map((item) => (
+                    <div key={item} className="flex items-start gap-3 rounded-2xl border border-stone-800 bg-stone-900/70 px-4 py-3">
+                      <CheckCircle2 className="mt-0.5 h-5 w-5 text-amber-300" />
+                      <span className="text-sm leading-7 text-stone-300">{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            </div>
+
+            <div className="mt-16 grid gap-5 md:grid-cols-3">
+              <StatCard value="4" label="Chặng phát triển lịch sử" />
+              <StatCard value="3" label="Trụ cột bản chất dân chủ XHCN" />
+              <StatCard value="2" label="Kết luận về vai trò mạng xã hội" />
+            </div>
+          </div>
+        </section>
+
+        <section className="border-y border-white/6 bg-[#171311]">
+          <div className="mx-auto grid max-w-7xl gap-8 px-6 py-18 md:grid-cols-3">
+            {[
+              {
+                icon: CircleDashed,
+                title: 'Mạch nội dung đầy đủ',
+                text: 'Website bám sát đầy đủ các khối nội dung trong README, tránh bỏ sót phần tiêu chí và khuyến nghị.',
+              },
+              {
+                icon: ShieldCheck,
+                title: 'Trình bày học thuật hơn',
+                text: 'Tăng độ rõ ràng bằng phân khối lớn, kiểu chữ thanh lịch cho tiêu đề và nhịp đọc thoáng hơn cho đoạn văn dài.',
+              },
+              {
+                icon: Cpu,
+                title: 'Tối ưu cho thuyết trình',
+                text: 'Các ý trọng tâm được tách thành bảng, thẻ thông tin và cụm luận điểm để nhìn nhanh vẫn nắm được ý chính.',
+              },
+            ].map((item, index) => (
+              <motion.div
+                key={item.title}
+                {...fadeUp}
+                transition={{ ...fadeUp.transition, delay: index * 0.08 }}
+                className="rounded-3xl border border-stone-800 bg-stone-950/75 p-7"
+              >
+                <item.icon className="h-8 w-8 text-amber-300" />
+                <h3 className="mt-5 font-serif text-2xl text-stone-100">{item.title}</h3>
+                <p className="mt-3 leading-8 text-stone-400">{item.text}</p>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+
+        <section id="lich-su" className="bg-[#120f0d] py-24 md:py-32">
+          <div className="mx-auto max-w-7xl px-6">
+            <SectionHeading
+              badge="Tiến trình lịch sử"
+              title="Sự tiến hóa của các hình thái dân chủ trong lịch sử nhân loại"
+              description="README nhấn mạnh rằng sự phát triển của dân chủ luôn gắn với phương thức sản xuất và đấu tranh giai cấp. Vì vậy phần này giữ vai trò nền tảng, đặt bối cảnh cho toàn bộ nội dung phía sau."
+              align="center"
+            />
+
+            <div className="relative mx-auto mt-16 max-w-6xl">
+              <div className="absolute left-4 top-0 hidden h-full w-px bg-gradient-to-b from-amber-500/40 via-stone-700 to-transparent md:left-1/2 md:block" />
+              <div className="space-y-12 md:space-y-16">
+                {timeline.map((item, index) => {
+                  const reverse = index % 2 === 1;
+                  return (
+                    <motion.article
+                      key={item.title}
+                      {...fadeUp}
+                      transition={{ ...fadeUp.transition, delay: index * 0.05 }}
+                      className="grid gap-6 md:grid-cols-2 md:gap-10"
+                    >
+                      <div className={cn('space-y-5', reverse && 'md:order-2')}>
+                        <div className="inline-flex rounded-full border border-amber-500/25 bg-amber-500/10 px-4 py-1.5 text-xs uppercase tracking-[0.28em] text-amber-200">
+                          {item.period}
+                        </div>
+                        <h3 className={cn('font-serif text-3xl text-stone-100', item.highlight && 'text-amber-200')}>
+                          {item.title}
+                        </h3>
+                        <p className="rounded-[28px] border border-stone-800 bg-stone-950/70 p-7 leading-8 text-stone-300">
+                          {item.content}
+                        </p>
+                      </div>
+
+                      <div className={cn(reverse && 'md:order-1')}>
+                        <div className="overflow-hidden rounded-[30px] border border-stone-800 bg-stone-950/70">
+                          <div className="aspect-[16/10] overflow-hidden">
+                            <img src={item.image} alt={item.title} className="h-full w-full object-cover" />
+                          </div>
+                          <div className="border-t border-stone-800 px-5 py-4">
+                            <div className="text-[11px] uppercase tracking-[0.24em] text-stone-500">Nguồn ảnh</div>
+                            <a
+                              href={item.sourceUrl}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="mt-2 block text-sm leading-7 text-stone-300 transition-colors hover:text-amber-200"
+                            >
+                              {item.sourceLabel}
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </motion.article>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="ban-chat" className="bg-[#171311] py-24 md:py-32">
+          <div className="mx-auto max-w-7xl px-6">
+            <SectionHeading
+              badge="Bản chất dân chủ XHCN"
+              title="Ba phương diện cốt lõi theo mạch lập luận của README"
+              description="Đây là nội dung trung tâm của bài. Giao diện được chuyển thành ba thẻ lớn để người xem có thể đọc độc lập từng phương diện mà không bị chìm trong các đoạn văn dài."
+            />
+
+            <div className="grid gap-6 lg:grid-cols-3">
+              {pillars.map((pillar, index) => (
+                <motion.article
+                  key={pillar.title}
+                  {...fadeUp}
+                  transition={{ ...fadeUp.transition, delay: index * 0.08 }}
+                  className="rounded-[30px] border border-stone-800 bg-stone-950/75 p-8 shadow-[0_20px_80px_rgba(0,0,0,0.35)]"
+                >
+                  <pillar.icon className="h-10 w-10 text-amber-300" />
+                  <h3 className="mt-6 font-serif text-3xl leading-tight text-stone-100">{pillar.title}</h3>
+                  <p className="mt-5 leading-8 text-stone-400">{pillar.summary}</p>
+                  <div className="mt-6 space-y-3">
+                    {pillar.points.map((point) => (
+                      <div key={point} className="flex gap-3 rounded-2xl border border-stone-800 bg-stone-900/60 px-4 py-3">
+                        <CheckCircle2 className="mt-1 h-4 w-4 flex-none text-amber-300" />
+                        <span className="text-sm leading-7 text-stone-300">{point}</span>
+                      </div>
+                    ))}
+                  </div>
+                </motion.article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="doi-chieu" className="bg-[#120f0d] py-24 md:py-32">
+          <div className="mx-auto max-w-7xl px-6">
+            <SectionHeading
+              badge="Đối chiếu bản chất"
+              title="So sánh dân chủ tư sản và dân chủ xã hội chủ nghĩa"
+              description="README có một bảng tiêu chí ngắn nhưng quan trọng. Ở giao diện mới, bảng được đưa ra thành trọng tâm riêng để người xem dễ nhìn ra sự khác biệt cốt lõi về chủ thể quyền lực, cơ sở kinh tế và mục tiêu chính trị."
+            />
+
+            <motion.div
+              {...fadeUp}
+              className="overflow-hidden rounded-[30px] border border-stone-800 bg-stone-950/80"
+            >
+              <div className="grid grid-cols-1 border-b border-stone-800 bg-stone-900/80 md:grid-cols-[1fr_1fr_1fr]">
+                <div className="px-6 py-5 text-sm font-semibold uppercase tracking-[0.22em] text-stone-500">Tiêu chí</div>
+                <div className="px-6 py-5 text-sm font-semibold uppercase tracking-[0.22em] text-stone-500">Dân chủ tư sản</div>
+                <div className="px-6 py-5 text-sm font-semibold uppercase tracking-[0.22em] text-amber-300">Dân chủ XHCN</div>
+              </div>
+              {compareRows.map((row) => (
+                <div key={row[0]} className="grid border-b border-stone-800/80 last:border-b-0 md:grid-cols-[1fr_1fr_1fr]">
+                  <div className="px-6 py-6 font-medium text-stone-200">{row[0]}</div>
+                  <div className="px-6 py-6 leading-8 text-stone-400">{row[1]}</div>
+                  <div className="px-6 py-6 leading-8 text-stone-200">{row[2]}</div>
+                </div>
+              ))}
+            </motion.div>
+          </div>
+        </section>
+
+        <section className="bg-[#171311] py-24 md:py-32">
+          <div className="mx-auto max-w-7xl px-6">
+            <SectionHeading
+              badge="Tiêu chí nhận diện"
+              title="Khi nào có thể nói quyền lực thực sự thuộc về nhân dân?"
+              description="Thay vì để phần này chìm trong văn bản, giao diện mới tách ba nhóm tiêu chí thành các khối trực quan. Đây là phần trước đây website chưa thể hiện đầy đủ so với README."
+            />
+
+            <div className="grid gap-6 md:grid-cols-3">
+              {criteria.map((item, index) => (
+                <motion.div
+                  key={item.title}
+                  {...fadeUp}
+                  transition={{ ...fadeUp.transition, delay: index * 0.08 }}
+                  className="rounded-[28px] border border-stone-800 bg-stone-950/75 p-8"
+                >
+                  <item.icon className="h-9 w-9 text-amber-300" />
+                  <h3 className="mt-5 font-serif text-2xl text-stone-100">{item.title}</h3>
+                  <p className="mt-4 leading-8 text-stone-400">{item.text}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="khong-gian-mang" className="bg-[#120f0d] py-24 md:py-32">
+          <div className="mx-auto max-w-7xl px-6">
+            <SectionHeading
+              badge="Không gian mạng"
+              title="Nhận định về mạng xã hội: đúng một phần, nhưng không phải bản chất tối cao"
+              description="README kết luận rõ rằng phát biểu “mạng xã hội là biểu hiện cao nhất của dân chủ XHCN” chỉ đúng một phần. Vì vậy giao diện được thiết kế theo thế đối chiếu: phần hợp lý ở bên trái, phần cần phản biện ở bên phải."
+            />
+
+            <div className="grid gap-6 lg:grid-cols-2">
+              <motion.div
+                {...fadeUp}
+                className="rounded-[30px] border border-emerald-900/50 bg-gradient-to-br from-emerald-950/60 to-stone-950/80 p-8"
+              >
+                <div className="inline-flex rounded-full border border-emerald-700/40 bg-emerald-500/10 px-4 py-1.5 text-xs uppercase tracking-[0.26em] text-emerald-200">
+                  Phần đúng
+                </div>
+                <h3 className="mt-5 font-serif text-3xl text-stone-100">Mạng xã hội mở rộng và hỗ trợ thực hành dân chủ</h3>
+                <div className="mt-6 space-y-3">
+                  {socialStrengths.map((item) => (
+                    <div key={item} className="flex gap-3 rounded-2xl border border-emerald-900/40 bg-black/20 px-4 py-3">
+                      <CheckCircle2 className="mt-1 h-4 w-4 flex-none text-emerald-300" />
+                      <span className="text-sm leading-7 text-stone-300">{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+
+              <motion.div
+                {...fadeUp}
+                transition={{ ...fadeUp.transition, delay: 0.08 }}
+                className="rounded-[30px] border border-rose-900/45 bg-gradient-to-br from-rose-950/55 to-stone-950/80 p-8"
+              >
+                <div className="inline-flex rounded-full border border-rose-700/40 bg-rose-500/10 px-4 py-1.5 text-xs uppercase tracking-[0.26em] text-rose-200">
+                  Phần chưa đúng
+                </div>
+                <h3 className="mt-5 font-serif text-3xl text-stone-100">Mạng xã hội không thể thay thế bản chất dân chủ XHCN</h3>
+                <div className="mt-6 space-y-3">
+                  {socialLimits.map((item) => (
+                    <div key={item} className="flex gap-3 rounded-2xl border border-rose-900/40 bg-black/20 px-4 py-3">
+                      <ChevronRight className="mt-1 h-4 w-4 flex-none text-rose-300" />
+                      <span className="text-sm leading-7 text-stone-300">{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            </div>
+
+            <motion.div
+              {...fadeUp}
+              transition={{ ...fadeUp.transition, delay: 0.1 }}
+              className="mt-8 rounded-[30px] border border-stone-800 bg-stone-950/75 p-8 md:p-10"
+            >
+              <div className="grid gap-8 lg:grid-cols-[0.7fr_1.3fr]">
+                <div>
+                  <div className="text-xs uppercase tracking-[0.28em] text-amber-300">Kết luận học thuật</div>
+                  <h3 className="mt-5 font-serif text-3xl leading-tight text-stone-100">
+                    Mạng xã hội là phương tiện, không phải bản chất của quyền lực nhân dân
+                  </h3>
+                </div>
+                <div className="space-y-4 text-lg leading-8 text-stone-300">
+                  <p>
+                    Biểu hiện cao nhất của dân chủ XHCN không nằm ở tính viral hay áp lực dư luận trên không gian số,
+                    mà nằm ở việc quyền lực của nhân dân được thể chế hóa, được bảo đảm bằng pháp luật, được tổ chức
+                    trong bộ máy nhà nước và được thực thi một cách ổn định, có hiệu lực.
+                  </p>
+                  <p>
+                    Vì vậy, mạng xã hội chỉ phát huy ý nghĩa tích cực khi nó trở thành kênh hỗ trợ lắng nghe, phản biện,
+                    giám sát và kết nối giữa chính quyền với nhân dân, chứ không bị đồng nhất với toàn bộ nền dân chủ.
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        <section id="ket-luan" className="bg-[#171311] py-24 md:py-32">
+          <div className="mx-auto max-w-7xl px-6">
+            <SectionHeading
+              badge="Kết luận và khuyến nghị"
+              title="Xây dựng nền dân chủ xã hội chủ nghĩa trong thời đại số"
+              description="README kết thúc bằng một phần khuyến nghị rất rõ. Phần này được đặt thành một khối riêng để bài thuyết trình có điểm kết mạch lạc và dễ chốt thông điệp."
+            />
+
+            <div className="grid gap-8 lg:grid-cols-[1fr_0.95fr]">
+              <motion.div
+                {...fadeUp}
+                className="rounded-[30px] border border-stone-800 bg-stone-950/75 p-8 md:p-10"
+              >
+                <p className="text-xl leading-9 text-stone-300">
+                  Nền dân chủ XHCN là một chỉnh thể thống nhất giữa lý luận và thực tiễn, giữa quyền lực và trách nhiệm,
+                  giữa mục tiêu và phương tiện. Phát huy các tiện ích của mạng xã hội là cần thiết, nhưng không được nhầm
+                  lẫn giữa công cụ truyền thông với bản chất chính trị - kinh tế của chế độ.
+                </p>
+                <p className="mt-6 text-lg leading-8 text-stone-400">
+                  Chỉ khi Nhà nước pháp quyền XHCN hoạt động hiệu quả, quyền lực được nhân dân thực sự kiểm soát và lợi
+                  ích phát triển hướng đến con người, dân chủ mới trở thành động lực mạnh mẽ cho một xã hội dân giàu,
+                  nước mạnh, dân chủ, công bằng, văn minh.
+                </p>
+              </motion.div>
+
+              <motion.div
+                {...fadeUp}
+                transition={{ ...fadeUp.transition, delay: 0.08 }}
+                className="rounded-[30px] border border-amber-900/35 bg-gradient-to-br from-amber-500/10 to-stone-950/80 p-8 md:p-10"
+              >
+                <div className="text-xs uppercase tracking-[0.28em] text-amber-300">Giải pháp trọng tâm</div>
+                <div className="mt-6 space-y-4">
+                  {recommendations.map((item) => (
+                    <div key={item} className="flex gap-3 rounded-2xl border border-amber-900/30 bg-black/15 px-4 py-3">
+                      <CheckCircle2 className="mt-1 h-4 w-4 flex-none text-amber-300" />
+                      <span className="text-sm leading-7 text-stone-200">{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
+        <section id="references" className="border-t border-white/6 bg-[#120f0d] py-20">
+          <div className="mx-auto max-w-7xl px-6">
+            <SectionHeading
+              badge="Tài liệu tham khảo"
+              title="Nguồn chính dùng để cấu trúc lại nội dung website"
+              description="README vẫn là nơi lưu đầy đủ danh mục tài liệu. Phần dưới đây chỉ chọn các nguồn đại diện để người xem có điểm bám nhanh ngay trên giao diện."
+            />
+
+            <div className="grid gap-4">
+              {sources.map((item, index) => (
+                <motion.a
+                  key={item.title}
+                  {...fadeUp}
+                  transition={{ ...fadeUp.transition, delay: index * 0.04 }}
+                  href={item.url}
+                  target={item.url.startsWith('http') ? '_blank' : undefined}
+                  rel={item.url.startsWith('http') ? 'noreferrer' : undefined}
+                  className="group rounded-[24px] border border-stone-800 bg-stone-950/70 px-6 py-5 transition-colors hover:border-amber-500/40"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="text-base leading-8 text-stone-300 group-hover:text-stone-100">{item.title}</div>
+                    <ChevronRight className="mt-1 h-5 w-5 flex-none text-stone-600 transition-colors group-hover:text-amber-300" />
+                  </div>
+                </motion.a>
+              ))}
+            </div>
+
+            <motion.div
+              id="references-note"
+              {...fadeUp}
+              transition={{ ...fadeUp.transition, delay: 0.12 }}
+              className="mt-8 rounded-[28px] border border-stone-800 bg-stone-950/60 p-8"
+            >
+              <div className="text-xs uppercase tracking-[0.28em] text-amber-300">AI Usage</div>
+              <h3 className="mt-4 font-serif text-3xl text-stone-100">
+                Ứng dụng AI có trách nhiệm, minh bạch, sáng tạo và bảo đảm liêm chính học thuật
+              </h3>
+              <p className="mt-4 max-w-4xl text-base leading-8 text-stone-400">
+                Phụ lục này công khai cách AI được sử dụng trong quá trình xây dựng website, đồng thời xác định rõ
+                phạm vi hỗ trợ của AI, phần do sinh viên chỉnh sửa và trách nhiệm cuối cùng đối với nội dung trình bày.
+              </p>
+
+              <div className="mt-8 grid gap-4 md:grid-cols-2">
+                {aiUsageItems.map((item) => (
+                  <div key={item.title} className="rounded-2xl border border-stone-800 bg-black/15 p-5">
+                    <div className="text-sm font-semibold text-stone-100">{item.title}</div>
+                    <p className="mt-3 text-sm leading-7 text-stone-300">{item.body}</p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-8 grid gap-6 lg:grid-cols-[1fr_1fr]">
+                <div className="rounded-2xl border border-stone-800 bg-black/15 p-6">
+                  <div className="text-sm font-semibold uppercase tracking-[0.22em] text-amber-300">
+                    Kiểm chứng và trách nhiệm nội dung
+                  </div>
+                  <p className="mt-4 text-sm leading-7 text-stone-300">
+                    Mọi nội dung do AI gợi ý đều được đối chiếu với giáo trình LLCT, nghị quyết, văn bản chính thống
+                    và các nguồn đã trích dẫn. Người thực hiện chịu trách nhiệm về nội dung cuối cùng, không chuyển giao
+                    toàn bộ việc phân tích học thuật cho AI.
+                  </p>
+                  <div className="mt-5 space-y-3">
+                    {officialChecks.map((item) => (
+                      <a
+                        key={item.title}
+                        href={item.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="block rounded-2xl border border-stone-800 bg-stone-950/70 px-4 py-4 transition-colors hover:border-amber-500/40"
+                      >
+                        <div className="text-sm font-semibold text-stone-100">{item.title}</div>
+                        <p className="mt-2 text-sm leading-7 text-stone-400">{item.detail}</p>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="rounded-2xl border border-stone-800 bg-black/15 p-6">
+                  <div className="text-sm font-semibold uppercase tracking-[0.22em] text-amber-300">
+                    Liêm chính học thuật và ứng dụng sáng tạo
+                  </div>
+                  <div className="mt-4 space-y-3">
+                    {integrityItems.map((item) => (
+                      <div key={item} className="flex gap-3 rounded-2xl border border-stone-800 bg-stone-950/70 px-4 py-4">
+                        <CheckCircle2 className="mt-1 h-4 w-4 flex-none text-amber-300" />
+                        <p className="text-sm leading-7 text-stone-300">{item}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="mt-5 text-sm leading-7 text-stone-300">
+                    Ứng dụng sáng tạo của AI trong sản phẩm này nằm ở việc hỗ trợ tạo cấu trúc trình bày web, gợi ý bảng
+                    so sánh, nhóm luận điểm, nhịp trình bày và phụ lục minh bạch; AI không viết thay toàn bộ nội dung học thuật.
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-8 rounded-2xl border border-emerald-900/40 bg-emerald-950/20 p-6">
+                <div className="text-sm font-semibold uppercase tracking-[0.22em] text-emerald-300">
+                  Cam kết bằng văn bản
+                </div>
+                <p className="mt-4 text-sm leading-7 text-stone-200">
+                  Nhóm cam kết AI chỉ đóng vai trò hỗ trợ trong việc gợi ý cấu trúc, hình thức trình bày, rà soát câu chữ
+                  và đề xuất cách trực quan hóa nội dung. Phần phân tích, chọn lọc lập luận, đối chiếu nguồn chính thống
+                  và quyết định nội dung cuối cùng do sinh viên thực hiện và chịu trách nhiệm.
+                </p>
+              </div>
+            </motion.div>
+
+            <motion.div
+              {...fadeUp}
+              transition={{ ...fadeUp.transition, delay: 0.16 }}
+              className="mt-8 rounded-[28px] border border-stone-800 bg-stone-950/60 p-8"
+            >
+              <div className="text-xs uppercase tracking-[0.28em] text-amber-300">Bối cảnh cập nhật</div>
+              <h3 className="mt-4 font-serif text-3xl text-stone-100">
+                Tính cập nhật và gắn kết với thực tiễn xã hội, kinh tế - chính trị hiện nay
+              </h3>
+              <div className="mt-6 grid gap-4 md:grid-cols-2">
+                {currentContextItems.map((item) => (
+                  <a
+                    key={item.title}
+                    href={item.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="rounded-2xl border border-stone-800 bg-black/15 p-5 transition-colors hover:border-amber-500/40"
+                  >
+                    <div className="text-base font-semibold text-stone-100">{item.title}</div>
+                    <p className="mt-3 text-sm leading-7 text-stone-300">{item.detail}</p>
+                  </a>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+        </section>
+      </main>
+    </div>
   );
 };
 
-const CompareSection = () => (
-  <section id="compare" className="py-32 bg-black relative border-y border-white/5">
-    <div className="max-w-7xl mx-auto px-6">
-      <FadeIn className="mb-20">
-        <div className="max-w-3xl">
-          <Badge className="bg-rose-500/10 text-rose-500 border-rose-500/20 mb-4">Đối chiếu Bản chất</Badge>
-          <h2 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tight mb-6">
-            Sự Khác Biệt Trọng Yếu
-          </h2>
-          <p className="text-white/50 font-light text-xl leading-relaxed">
-            Hai nền tảng tư tưởng dẫn đến cách phân bổ và thực thi quyền lực nhà nước khác biệt sâu sắc.
-          </p>
-        </div>
-      </FadeIn>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {/* Tư sản */}
-        <FadeIn direction="right">
-          <div className="h-full bg-white/5 rounded-3xl p-10 border border-white/10 flex flex-col items-center text-center">
-            <div className="w-20 h-20 rounded-2xl bg-gray-800 flex items-center justify-center mb-8 border border-white/10">
-              <Scale className="w-10 h-10 text-gray-400" />
-            </div>
-            <h3 className="text-3xl font-black text-white mb-10 uppercase tracking-widest text-gray-300">Dân Chủ Tư Sản</h3>
-
-            <ul className="w-full space-y-6 text-left">
-              {[
-                { t: "Chủ thể", d: "Giai cấp tư sản (Nhóm xã hội thiểu số)" },
-                { t: "Cơ sở vật chất", d: "Dựa trên chế độ chiếm hữu tư nhân về tư liệu sản xuất" },
-                { t: "Mục đích", d: "Bảo vệ tư bản, duy trì sự bóc lột sức lao động" },
-                { t: "Thiết chế", d: "Đa đảng phái, cạnh tranh phiếu bầu, định hướng dư luận" }
-              ].map((k, i) => (
-                <li key={i} className="flex flex-col border-b border-white/5 pb-4 last:border-0">
-                  <span className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">{k.t}</span>
-                  <span className="text-lg text-white font-light">{k.d}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </FadeIn>
-
-        {/* XHCN */}
-        <FadeIn direction="left">
-          <div className="group h-full bg-gradient-to-br from-rose-950/60 via-black to-black rounded-3xl p-10 border border-rose-500/30 flex flex-col items-center text-center shadow-[0_0_50px_rgba(225,29,72,0.1)] hover:border-rose-400 transition-all duration-500 scale-[1.02]">
-            <div className="w-20 h-20 rounded-2xl bg-rose-500/20 flex items-center justify-center mb-8 border border-rose-500/30 shadow-inner group-hover:scale-110 group-hover:bg-rose-500/30 transition-all">
-              <Users className="w-10 h-10 text-rose-500" />
-            </div>
-            <h3 className="text-3xl font-black text-white mb-10 uppercase tracking-widest text-rose-400 drop-shadow-[0_0_15px_rgba(225,29,72,0.5)]">Dân Chủ XHCN</h3>
-
-            <ul className="w-full space-y-6 text-left">
-              {[
-                { t: "Chủ thể", d: "Liên minh công-nông & nhân dân lao động (Đa số tuyệt đối)" },
-                { t: "Cơ sở vật chất", d: "Sở hữu chung tài sản xã hội, lấy công hữu làm nòng cốt" },
-                { t: "Mục đích", d: "Giải phóng giai cấp, kiến tạo công bằng xã hội hiện thực" },
-                { t: "Thiết chế", d: "Đảng duy nhất lãnh đạo, tự vận động tập trung dân chủ" }
-              ].map((k, i) => (
-                <li key={i} className="flex flex-col border-b border-rose-500/10 pb-4 last:border-0">
-                  <span className="text-xs font-bold text-rose-500 uppercase tracking-wider mb-2">{k.t}</span>
-                  <span className="text-lg text-white font-light group-hover:text-rose-100 transition-colors">{k.d}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </FadeIn>
-      </div>
-    </div>
-  </section>
-);
-
-const SocialMediaSection = () => (
-  <section id="social" className="py-32 relative bg-[#050505]">
-    <div className="max-w-7xl mx-auto px-6">
-
-      <FadeIn className="mb-16">
-        <div className="max-w-4xl bg-white/5 border border-white/10 rounded-3xl p-12 mx-auto relative overflow-hidden backdrop-blur-sm">
-          <div className="absolute right-0 top-0 opacity-10 p-8"><MonitorSmartphone className="w-48 h-48" /></div>
-
-          <Badge className="bg-amber-500/10 text-amber-500 border-amber-500/20 mb-6">Quan Điểm</Badge>
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6 leading-snug">
-            "Chia sẻ kiến nghị viral trên MXH buộc chính quyền lắng nghe — đây là biểu hiện cao nhất của dân chủ."
-          </h2>
-          <div className="inline-block mt-4 inline-flex items-center gap-2 bg-rose-600 px-6 py-3 rounded-full text-white font-black uppercase tracking-widest shadow-[0_0_20px_rgba(225,29,72,0.4)]">
-            Kết Luận
-          </div>
-        </div>
-      </FadeIn>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 pt-8 relative">
-        {/* WHY TRUE */}
-        <FadeIn direction="right">
-          <div className="pl-6 border-l-2 border-emerald-500">
-            <div className="flex items-center gap-4 mb-8">
-              <div className="w-12 h-12 bg-emerald-500/20 rounded-full flex items-center justify-center">
-                <ThumbsUp className="w-6 h-6 text-emerald-400" />
-              </div>
-              <h3 className="text-2xl font-bold text-white">Tại sao phát biểu Hợp Lý?</h3>
-            </div>
-
-            <div className="space-y-8">
-              {[
-                { t: "Không gian kết nối trực tiếp", d: "Kênh để người dân chủ động đóng góp thông tin, tạo sự chú ý tức thì đến bộ máy quản lý nhà nước mà không cần rào cản hành chính." },
-                { t: "Công cụ giám sát sắc bén", d: "Một scandal hay quan liêu địa phương có thể bị phơi bày nhanh chóng, hình thành dư luận phản biện xã hội cực mạnh buộc phải xử lý." },
-                { t: "Thúc đẩy Tự do ngôn luận", d: "Biểu hiện mạnh mẽ nhất cho tự do tư tưởng, tự do chia sẻ theo hiến pháp." }
-              ].map((i, k) => (
-                <div key={k} className="bg-white/5 p-6 rounded-2xl">
-                  <strong className="block text-emerald-400 mb-2 font-bold">{i.t}</strong>
-                  <p className="text-white/60 font-light">{i.d}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </FadeIn>
-
-        {/* WHY FALSE */}
-        <FadeIn direction="left">
-          <div className="pl-6 border-l-2 border-rose-500">
-            <div className="flex items-center gap-4 mb-8">
-              <div className="w-12 h-12 bg-rose-500/20 rounded-full flex items-center justify-center">
-                <ThumbsDown className="w-6 h-6 text-rose-400" />
-              </div>
-              <h3 className="text-2xl font-bold text-white">Vì sao chưa hoàn toàn đúng?</h3>
-            </div>
-
-            <div className="space-y-8">
-              {[
-                { t: "Nhầm lẫn công cụ với thể chế", d: "Mạng xã hội chỉ là phương tiện truyền thông tiện ích. Nó không phải là một nhánh quyền lực nhà nước hay thiết chế có tính cưỡng chế pháp lý." },
-                { t: "Dân chủ vô chính phủ", d: "Dễ bị bóp méo cảm xúc bởi tin giả, thiếu tổ chức, không đại diện cho lợi ích chung thực sự mà có thể là sản phẩm của truyền thông đen." },
-                { t: "Phụ thuôc tập đoàn công nghệ", d: "Hạ tầng lõi do tư bản kiểm soát. Thuật toán có thể loại bỏ luồng tin bất lợi, hình thành 'nô lệ công nghệ' trái với tôn chỉ dân chủ xã hội." }
-              ].map((i, k) => (
-                <div key={k} className="bg-white/5 p-6 rounded-2xl">
-                  <strong className="block text-rose-400 mb-2 font-bold">{i.t}</strong>
-                  <p className="text-white/60 font-light">{i.d}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </FadeIn>
-      </div>
-
-    </div>
-  </section>
-);
-
-const FooterSection = () => (
-  <footer className="bg-black py-24 border-t border-white/10 text-center relative overflow-hidden">
-    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-px bg-gradient-to-r from-transparent via-rose-500 to-transparent opacity-50"></div>
-    <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[500px] h-[300px] bg-rose-600 blur-[150px] opacity-20 rounded-full pointer-events-none"></div>
-
-    <div className="max-w-4xl mx-auto px-6 position-relative z-10">
-      <FadeIn>
-        <ShieldAlert className="w-16 h-16 text-white/20 mx-auto mb-8" />
-        <h2 className="text-4xl font-black text-white uppercase tracking-tight mb-6">
-          Kiến Tạo Dân Chủ Số
-        </h2>
-        <p className="text-2xl text-white/50 font-light leading-relaxed mb-12">
-          Mạng xã hội là chiếc cửa sổ. Còn ngôi nhà quyền lực đích thực phải được đúc vững bằng gạch của tư tưởng Mác-Lênin và thép của bộ máy luật pháp nghiêm minh.
-        </p>
-
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-sm uppercase tracking-widest font-bold text-white/40">
-          <span className="px-6 py-2 border border-white/10 rounded-full">Quản chế không gian trí tuệ</span>
-          <span className="text-rose-500">•</span>
-          <span className="px-6 py-2 border border-white/10 rounded-full">Nâng cấp văn hóa mạng</span>
-        </div>
-      </FadeIn>
-    </div>
-  </footer>
-);
-
-export default function App() {
-  return (
-    <div className="bg-[#020202] text-white min-h-screen font-sans selection:bg-rose-500 selection:text-white">
-      <Header />
-      <HeroSection />
-      <HistorySection />
-      <CompareSection />
-      <SocialMediaSection />
-      <FooterSection />
-    </div>
-  );
-}
+export default App;
