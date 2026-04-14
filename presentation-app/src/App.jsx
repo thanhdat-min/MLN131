@@ -6,11 +6,8 @@ import {
   Building2,
   CheckCircle2,
   ChevronRight,
-  CircleDashed,
-  Cpu,
   Landmark,
   Scale,
-  ShieldCheck,
   Speech,
   Users,
 } from 'lucide-react';
@@ -246,7 +243,7 @@ const currentContextItems = [
 ];
 
 const SectionBadge = ({ children }) => (
-  <span className="inline-flex items-center rounded-full border border-stone-700/80 bg-stone-900/80 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.28em] text-stone-300">
+  <span className="inline-flex items-center rounded-full border border-stone-300 bg-stone-50 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.28em] text-stone-600 shadow-sm">
     {children}
   </span>
 );
@@ -257,41 +254,41 @@ const SectionHeading = ({ badge, title, description, align = 'left' }) => (
     className={cn('mb-14 max-w-3xl', align === 'center' && 'mx-auto text-center')}
   >
     <SectionBadge>{badge}</SectionBadge>
-    <h2 className="mt-5 font-serif text-4xl leading-tight text-stone-50 md:text-5xl">
+    <h2 className="mt-5 font-serif text-4xl leading-tight text-stone-900 md:text-5xl">
       {title}
     </h2>
-    <p className="mt-5 text-lg leading-8 text-stone-400">{description}</p>
+    <p className="mt-5 text-lg leading-9 text-stone-600">{description}</p>
   </motion.div>
 );
 
 const StatCard = ({ value, label }) => (
-  <div className="rounded-3xl border border-stone-800 bg-stone-950/80 p-6 shadow-[0_20px_80px_rgba(0,0,0,0.35)]">
-    <div className="font-serif text-4xl text-stone-50">{value}</div>
+  <div className="rounded-[2rem] border border-stone-200 bg-white p-6 shadow-[0_24px_60px_rgba(15,23,42,0.08)]">
+    <div className="font-serif text-4xl text-stone-900">{value}</div>
     <div className="mt-2 text-sm uppercase tracking-[0.24em] text-stone-500">{label}</div>
   </div>
 );
 
 const App = () => {
   return (
-    <div className="min-h-screen bg-[#120f0d] text-stone-100">
-      <div className="fixed inset-x-0 top-0 z-50 border-b border-white/8 bg-[#120f0d]/85 backdrop-blur-xl">
+    <div className="min-h-screen bg-[#fcfbf8] text-stone-800">
+      <div className="fixed inset-x-0 top-0 z-50 border-b border-stone-200/90 bg-[#fcfbf8]/90 backdrop-blur-xl">
         <div className="mx-auto flex h-[4.5rem] max-w-7xl items-center justify-between px-6">
           <a href="#tong-quan" className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-amber-700/40 bg-amber-500/10 text-amber-300">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-stone-300 bg-white text-stone-700 shadow-sm">
               <Scale className="h-5 w-5" />
             </div>
             <div>
               <div className="text-xs uppercase tracking-[0.28em] text-stone-500">MLN131</div>
-              <div className="font-serif text-lg text-stone-100">Dân chủ và không gian mạng</div>
+              <div className="font-serif text-lg text-stone-900">Dân chủ và không gian mạng</div>
             </div>
           </a>
 
           <nav className="hidden items-center gap-6 lg:flex">
-            {navItems.map((item) => (
+            {navItems.filter((item) => item.href !== '#lich-su').map((item) => (
               <a
                 key={item.href}
                 href={item.href}
-                className="text-sm font-medium text-stone-400 transition-colors hover:text-stone-100"
+                className="text-sm font-medium text-stone-500 transition-colors hover:text-stone-900"
               >
                 {item.label}
               </a>
@@ -302,33 +299,27 @@ const App = () => {
 
       <main>
         <section id="tong-quan" className="relative overflow-hidden pt-28">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(180,83,9,0.16),transparent_34%),radial-gradient(circle_at_80%_20%,rgba(153,27,27,0.18),transparent_24%),linear-gradient(180deg,#120f0d_0%,#171311_42%,#120f0d_100%)]" />
-          <div className="absolute inset-x-0 top-0 h-[520px] bg-[linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[length:64px_100%] opacity-[0.08]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(120,113,108,0.12),transparent_34%),radial-gradient(circle_at_80%_20%,rgba(231,229,228,0.8),transparent_24%),linear-gradient(180deg,#fcfbf8_0%,#f7f4ee_42%,#fcfbf8_100%)]" />
+          <div className="absolute inset-x-0 top-0 h-[520px] bg-[linear-gradient(90deg,rgba(120,113,108,0.12)_1px,transparent_1px)] bg-[length:64px_100%] opacity-[0.14]" />
 
           <div className="relative mx-auto max-w-7xl px-6 pb-24 pt-16 md:pb-32 md:pt-24">
             <div className="grid items-end gap-14 lg:grid-cols-[1.3fr_0.7fr]">
               <motion.div {...fadeUp}>
                 <SectionBadge>Đề tài trọng tâm</SectionBadge>
-                <h1 className="mt-6 max-w-5xl font-serif text-5xl leading-[1.02] text-stone-50 md:text-7xl">
+                <h1 className="mt-6 max-w-5xl font-serif text-5xl leading-[1.02] text-stone-900 md:text-7xl">
                   Bản chất của nền dân chủ xã hội chủ nghĩa và vai trò của không gian mạng
                 </h1>
-                <p className="mt-8 max-w-3xl text-xl leading-9 text-stone-300">
-                  Bài trình bày đi từ tiến trình lịch sử của các hình thái dân chủ, đến bản chất của nền dân chủ
-                  xã hội chủ nghĩa, các tiêu chí nhận diện quyền lực nhân dân và cách nhìn nhận vai trò của mạng
-                  xã hội trong đời sống chính trị - xã hội hiện nay.
-                </p>
-
                 <div className="mt-10 flex flex-wrap gap-4">
                   <a
                     href="#lich-su"
-                    className="inline-flex items-center gap-2 rounded-full bg-stone-100 px-7 py-3.5 text-sm font-semibold text-stone-950 transition-transform hover:-translate-y-0.5"
+                    className="inline-flex items-center gap-2 rounded-full bg-stone-900 px-7 py-3.5 text-sm font-semibold text-stone-50 transition-transform hover:-translate-y-0.5"
                   >
                     Xem toàn bộ mạch trình bày
                     <ArrowRight className="h-4 w-4" />
                   </a>
                   <a
                     href="#references"
-                    className="inline-flex items-center gap-2 rounded-full border border-stone-700 px-7 py-3.5 text-sm font-semibold text-stone-200 transition-colors hover:border-amber-500/50 hover:text-amber-200"
+                    className="inline-flex items-center gap-2 rounded-full border border-stone-300 bg-white px-7 py-3.5 text-sm font-semibold text-stone-700 transition-colors hover:border-stone-500 hover:text-stone-900"
                   >
                     Tài liệu tham khảo
                     <ChevronRight className="h-4 w-4" />
@@ -339,19 +330,18 @@ const App = () => {
               <motion.div
                 {...fadeUp}
                 transition={{ ...fadeUp.transition, delay: 0.12 }}
-                className="rounded-[32px] border border-stone-800 bg-stone-950/80 p-8 shadow-[0_30px_100px_rgba(0,0,0,0.45)]"
+                className="rounded-[32px] border border-stone-200 bg-white p-8 shadow-[0_30px_100px_rgba(15,23,42,0.08)]"
               >
                 <div className="text-xs uppercase tracking-[0.28em] text-amber-300">Luận đề trung tâm</div>
                 <div className="mt-8 grid gap-4">
                   {[
-                    'Tiến trình lịch sử của các hình thái dân chủ',
                     'Ba phương diện cốt lõi của dân chủ XHCN',
                     'Tiêu chí xác định quyền lực thực sự thuộc về nhân dân',
                     'Phân tích nhận định về vai trò của mạng xã hội',
                   ].map((item) => (
-                    <div key={item} className="flex items-start gap-3 rounded-2xl border border-stone-800 bg-stone-900/70 px-4 py-3">
-                      <CheckCircle2 className="mt-0.5 h-5 w-5 text-amber-300" />
-                      <span className="text-sm leading-7 text-stone-300">{item}</span>
+                    <div key={item} className="flex items-start gap-3 rounded-2xl border border-stone-200 bg-stone-50 px-4 py-3">
+                      <CheckCircle2 className="mt-0.5 h-5 w-5 text-stone-700" />
+                      <span className="text-sm leading-7 text-stone-700">{item}</span>
                     </div>
                   ))}
                 </div>
@@ -359,47 +349,14 @@ const App = () => {
             </div>
 
             <div className="mt-16 grid gap-5 md:grid-cols-3">
-              <StatCard value="4" label="Chặng phát triển lịch sử" />
               <StatCard value="3" label="Trụ cột bản chất dân chủ XHCN" />
+              <StatCard value="2" label="Khối đối chiếu trọng tâm" />
               <StatCard value="2" label="Kết luận về vai trò mạng xã hội" />
-            </div>
+          </div>
           </div>
         </section>
 
-        <section className="border-y border-white/6 bg-[#171311]">
-          <div className="mx-auto grid max-w-7xl gap-8 px-6 py-18 md:grid-cols-3">
-            {[
-              {
-                icon: CircleDashed,
-                title: 'Mạch nội dung đầy đủ',
-                text: 'Nội dung được triển khai theo một mạch rõ ràng từ nền tảng lý luận đến đối chiếu, đánh giá và kết luận.',
-              },
-              {
-                icon: ShieldCheck,
-                title: 'Trình bày học thuật hơn',
-                text: 'Tăng độ rõ ràng bằng phân khối lớn, kiểu chữ thanh lịch cho tiêu đề và nhịp đọc thoáng hơn cho đoạn văn dài.',
-              },
-              {
-                icon: Cpu,
-                title: 'Tối ưu cho thuyết trình',
-                text: 'Các ý trọng tâm được tách thành bảng, thẻ thông tin và cụm luận điểm để nhìn nhanh vẫn nắm được ý chính.',
-              },
-            ].map((item, index) => (
-              <motion.div
-                key={item.title}
-                {...fadeUp}
-                transition={{ ...fadeUp.transition, delay: index * 0.08 }}
-                className="rounded-3xl border border-stone-800 bg-stone-950/75 p-7"
-              >
-                <item.icon className="h-8 w-8 text-amber-300" />
-                <h3 className="mt-5 font-serif text-2xl text-stone-100">{item.title}</h3>
-                <p className="mt-3 leading-8 text-stone-400">{item.text}</p>
-              </motion.div>
-            ))}
-          </div>
-        </section>
-
-        <section id="lich-su" className="bg-[#120f0d] py-24 md:py-32">
+        <section id="lich-su" className="bg-[#fcfbf8] py-24 md:py-32">
           <div className="mx-auto max-w-7xl px-6">
             <SectionHeading
               badge="Tiến trình lịch sử"
@@ -408,42 +365,39 @@ const App = () => {
               align="center"
             />
 
-            <div className="relative mx-auto mt-16 max-w-6xl">
-              <div className="absolute left-4 top-0 hidden h-full w-px bg-gradient-to-b from-amber-500/40 via-stone-700 to-transparent md:left-1/2 md:block" />
-              <div className="space-y-12 md:space-y-16">
+            <div className="mt-16 grid gap-8 lg:grid-cols-2">
                 {timeline.map((item, index) => {
-                  const reverse = index % 2 === 1;
                   return (
                     <motion.article
                       key={item.title}
                       {...fadeUp}
                       transition={{ ...fadeUp.transition, delay: index * 0.05 }}
-                      className="grid gap-6 md:grid-cols-2 md:gap-10"
+                      className="rounded-[2rem] border border-stone-200 bg-white p-8 shadow-[0_20px_60px_rgba(15,23,42,0.06)] md:p-10"
                     >
-                      <div className={cn('space-y-5', reverse && 'md:order-2')}>
-                        <div className="inline-flex rounded-full border border-amber-500/25 bg-amber-500/10 px-4 py-1.5 text-xs uppercase tracking-[0.28em] text-amber-200">
+                      <div className="space-y-5">
+                        <div className="inline-flex rounded-full border border-stone-300 bg-stone-50 px-4 py-1.5 text-xs uppercase tracking-[0.28em] text-stone-600">
                           {item.period}
                         </div>
-                        <h3 className={cn('font-serif text-3xl text-stone-100', item.highlight && 'text-amber-200')}>
+                        <h3 className={cn('font-serif text-3xl text-stone-900', item.highlight && 'text-stone-700')}>
                           {item.title}
                         </h3>
-                        <p className="rounded-[28px] border border-stone-800 bg-stone-950/70 p-7 leading-8 text-stone-300">
+                        <p className="text-lg leading-9 text-stone-600">
                           {item.content}
                         </p>
                       </div>
 
-                      <div className={cn(reverse && 'md:order-1')}>
-                        <div className="overflow-hidden rounded-[30px] border border-stone-800 bg-stone-950/70">
-                          <div className="aspect-[16/10] overflow-hidden">
+                      <div className="hidden">
+                        <div className="flex h-full flex-col overflow-hidden bg-stone-50">
+                          <div className="aspect-[16/10] overflow-hidden lg:aspect-auto lg:flex-1">
                             <img src={item.image} alt={item.title} className="h-full w-full object-cover" />
                           </div>
-                          <div className="border-t border-stone-800 px-5 py-4">
+                          <div className="border-t border-stone-200 px-5 py-4">
                             <div className="text-[11px] uppercase tracking-[0.24em] text-stone-500">Nguồn ảnh</div>
                             <a
                               href={item.sourceUrl}
                               target="_blank"
                               rel="noreferrer"
-                              className="mt-2 block text-sm leading-7 text-stone-300 transition-colors hover:text-amber-200"
+                              className="mt-2 block text-sm leading-7 text-stone-700 transition-colors hover:text-stone-900"
                             >
                               {item.sourceLabel}
                             </a>
@@ -455,10 +409,9 @@ const App = () => {
                 })}
               </div>
             </div>
-          </div>
         </section>
 
-        <section id="ban-chat" className="bg-[#171311] py-24 md:py-32">
+        <section id="ban-chat" className="bg-[#f7f4ee] py-24 md:py-32">
           <div className="mx-auto max-w-7xl px-6">
             <SectionHeading
               badge="Bản chất dân chủ XHCN"
@@ -472,16 +425,16 @@ const App = () => {
                   key={pillar.title}
                   {...fadeUp}
                   transition={{ ...fadeUp.transition, delay: index * 0.08 }}
-                  className="rounded-[30px] border border-stone-800 bg-stone-950/75 p-8 shadow-[0_20px_80px_rgba(0,0,0,0.35)]"
+                  className="rounded-[30px] border border-stone-200 bg-white p-8 shadow-[0_20px_80px_rgba(15,23,42,0.06)]"
                 >
-                  <pillar.icon className="h-10 w-10 text-amber-300" />
-                  <h3 className="mt-6 font-serif text-3xl leading-tight text-stone-100">{pillar.title}</h3>
-                  <p className="mt-5 leading-8 text-stone-400">{pillar.summary}</p>
+                  <pillar.icon className="h-10 w-10 text-stone-700" />
+                  <h3 className="mt-6 font-serif text-3xl leading-tight text-stone-900">{pillar.title}</h3>
+                  <p className="mt-5 leading-9 text-stone-600">{pillar.summary}</p>
                   <div className="mt-6 space-y-3">
                     {pillar.points.map((point) => (
-                      <div key={point} className="flex gap-3 rounded-2xl border border-stone-800 bg-stone-900/60 px-4 py-3">
-                        <CheckCircle2 className="mt-1 h-4 w-4 flex-none text-amber-300" />
-                        <span className="text-sm leading-7 text-stone-300">{point}</span>
+                      <div key={point} className="flex gap-3 rounded-2xl border border-stone-200 bg-stone-50 px-4 py-3">
+                        <CheckCircle2 className="mt-1 h-4 w-4 flex-none text-stone-700" />
+                        <span className="text-sm leading-7 text-stone-700">{point}</span>
                       </div>
                     ))}
                   </div>
@@ -491,7 +444,7 @@ const App = () => {
           </div>
         </section>
 
-        <section id="doi-chieu" className="bg-[#120f0d] py-24 md:py-32">
+        <section id="doi-chieu" className="bg-[#fcfbf8] py-24 md:py-32">
           <div className="mx-auto max-w-7xl px-6">
             <SectionHeading
               badge="Đối chiếu bản chất"
@@ -501,25 +454,25 @@ const App = () => {
 
             <motion.div
               {...fadeUp}
-              className="overflow-hidden rounded-[30px] border border-stone-800 bg-stone-950/80"
+              className="overflow-hidden rounded-[30px] border border-stone-200 bg-white shadow-[0_20px_60px_rgba(15,23,42,0.06)]"
             >
-              <div className="grid grid-cols-1 border-b border-stone-800 bg-stone-900/80 md:grid-cols-[1fr_1fr_1fr]">
+              <div className="grid grid-cols-1 border-b border-stone-200 bg-stone-50 md:grid-cols-[1fr_1fr_1fr]">
                 <div className="px-6 py-5 text-sm font-semibold uppercase tracking-[0.22em] text-stone-500">Tiêu chí</div>
                 <div className="px-6 py-5 text-sm font-semibold uppercase tracking-[0.22em] text-stone-500">Dân chủ tư sản</div>
                 <div className="px-6 py-5 text-sm font-semibold uppercase tracking-[0.22em] text-amber-300">Dân chủ XHCN</div>
               </div>
               {compareRows.map((row) => (
-                <div key={row[0]} className="grid border-b border-stone-800/80 last:border-b-0 md:grid-cols-[1fr_1fr_1fr]">
-                  <div className="px-6 py-6 font-medium text-stone-200">{row[0]}</div>
-                  <div className="px-6 py-6 leading-8 text-stone-400">{row[1]}</div>
-                  <div className="px-6 py-6 leading-8 text-stone-200">{row[2]}</div>
+                <div key={row[0]} className="grid border-b border-stone-200 last:border-b-0 md:grid-cols-[1fr_1fr_1fr]">
+                  <div className="px-6 py-6 font-medium text-stone-900">{row[0]}</div>
+                  <div className="px-6 py-6 leading-8 text-stone-600">{row[1]}</div>
+                  <div className="px-6 py-6 leading-8 text-stone-700">{row[2]}</div>
                 </div>
               ))}
             </motion.div>
           </div>
         </section>
 
-        <section className="bg-[#171311] py-24 md:py-32">
+        <section className="bg-[#f7f4ee] py-24 md:py-32">
           <div className="mx-auto max-w-7xl px-6">
             <SectionHeading
               badge="Tiêu chí nhận diện"
@@ -533,18 +486,18 @@ const App = () => {
                   key={item.title}
                   {...fadeUp}
                   transition={{ ...fadeUp.transition, delay: index * 0.08 }}
-                  className="rounded-[28px] border border-stone-800 bg-stone-950/75 p-8"
+                  className="rounded-[28px] border border-stone-200 bg-white p-8 shadow-[0_18px_50px_rgba(15,23,42,0.05)]"
                 >
-                  <item.icon className="h-9 w-9 text-amber-300" />
-                  <h3 className="mt-5 font-serif text-2xl text-stone-100">{item.title}</h3>
-                  <p className="mt-4 leading-8 text-stone-400">{item.text}</p>
+                  <item.icon className="h-9 w-9 text-stone-700" />
+                  <h3 className="mt-5 font-serif text-2xl text-stone-900">{item.title}</h3>
+                  <p className="mt-4 leading-9 text-stone-600">{item.text}</p>
                 </motion.div>
               ))}
             </div>
           </div>
         </section>
 
-        <section id="khong-gian-mang" className="bg-[#120f0d] py-24 md:py-32">
+        <section id="khong-gian-mang" className="bg-[#fcfbf8] py-24 md:py-32">
           <div className="mx-auto max-w-7xl px-6">
             <SectionHeading
               badge="Không gian mạng"
@@ -555,17 +508,17 @@ const App = () => {
             <div className="grid gap-6 lg:grid-cols-2">
               <motion.div
                 {...fadeUp}
-                className="rounded-[30px] border border-emerald-900/50 bg-gradient-to-br from-emerald-950/60 to-stone-950/80 p-8"
+                className="rounded-[30px] border border-emerald-200 bg-gradient-to-br from-emerald-50 to-white p-8 shadow-[0_18px_50px_rgba(16,185,129,0.08)]"
               >
-                <div className="inline-flex rounded-full border border-emerald-700/40 bg-emerald-500/10 px-4 py-1.5 text-xs uppercase tracking-[0.26em] text-emerald-200">
+                <div className="inline-flex rounded-full border border-emerald-400 bg-emerald-100 px-4 py-1.5 text-xs uppercase tracking-[0.26em] text-emerald-800">
                   Phần đúng
                 </div>
-                <h3 className="mt-5 font-serif text-3xl text-stone-100">Mạng xã hội mở rộng và hỗ trợ thực hành dân chủ</h3>
+                <h3 className="mt-5 font-serif text-3xl text-stone-900">Mạng xã hội mở rộng và hỗ trợ thực hành dân chủ</h3>
                 <div className="mt-6 space-y-3">
                   {socialStrengths.map((item) => (
-                    <div key={item} className="flex gap-3 rounded-2xl border border-emerald-900/40 bg-black/20 px-4 py-3">
+                    <div key={item} className="flex gap-3 rounded-2xl border border-emerald-200 bg-white px-4 py-3">
                       <CheckCircle2 className="mt-1 h-4 w-4 flex-none text-emerald-300" />
-                      <span className="text-sm leading-7 text-stone-300">{item}</span>
+                      <span className="text-sm leading-7 text-stone-700">{item}</span>
                     </div>
                   ))}
                 </div>
@@ -574,17 +527,17 @@ const App = () => {
               <motion.div
                 {...fadeUp}
                 transition={{ ...fadeUp.transition, delay: 0.08 }}
-                className="rounded-[30px] border border-rose-900/45 bg-gradient-to-br from-rose-950/55 to-stone-950/80 p-8"
+                className="rounded-[30px] border border-rose-200 bg-gradient-to-br from-rose-50 to-white p-8 shadow-[0_18px_50px_rgba(244,63,94,0.08)]"
               >
-                <div className="inline-flex rounded-full border border-rose-700/40 bg-rose-500/10 px-4 py-1.5 text-xs uppercase tracking-[0.26em] text-rose-200">
+                <div className="inline-flex rounded-full border border-rose-400 bg-rose-100 px-4 py-1.5 text-xs uppercase tracking-[0.26em] text-rose-800">
                   Phần chưa đúng
                 </div>
-                <h3 className="mt-5 font-serif text-3xl text-stone-100">Mạng xã hội không thể thay thế bản chất dân chủ XHCN</h3>
+                <h3 className="mt-5 font-serif text-3xl text-stone-900">Mạng xã hội không thể thay thế bản chất dân chủ XHCN</h3>
                 <div className="mt-6 space-y-3">
                   {socialLimits.map((item) => (
-                    <div key={item} className="flex gap-3 rounded-2xl border border-rose-900/40 bg-black/20 px-4 py-3">
+                    <div key={item} className="flex gap-3 rounded-2xl border border-rose-200 bg-white px-4 py-3">
                       <ChevronRight className="mt-1 h-4 w-4 flex-none text-rose-300" />
-                      <span className="text-sm leading-7 text-stone-300">{item}</span>
+                      <span className="text-sm leading-7 text-stone-700">{item}</span>
                     </div>
                   ))}
                 </div>
@@ -594,16 +547,16 @@ const App = () => {
             <motion.div
               {...fadeUp}
               transition={{ ...fadeUp.transition, delay: 0.1 }}
-              className="mt-8 rounded-[30px] border border-stone-800 bg-stone-950/75 p-8 md:p-10"
+              className="mt-8 rounded-[30px] border border-stone-200 bg-white p-8 shadow-[0_20px_60px_rgba(15,23,42,0.06)] md:p-10"
             >
               <div className="grid gap-8 lg:grid-cols-[0.7fr_1.3fr]">
                 <div>
                   <div className="text-xs uppercase tracking-[0.28em] text-amber-300">Kết luận học thuật</div>
-                  <h3 className="mt-5 font-serif text-3xl leading-tight text-stone-100">
+                  <h3 className="mt-5 font-serif text-3xl leading-tight text-stone-900">
                     Mạng xã hội là phương tiện, không phải bản chất của quyền lực nhân dân
                   </h3>
                 </div>
-                <div className="space-y-4 text-lg leading-8 text-stone-300">
+                <div className="space-y-4 text-lg leading-9 text-stone-600">
                   <p>
                     Biểu hiện cao nhất của dân chủ XHCN không nằm ở tính viral hay áp lực dư luận trên không gian số,
                     mà nằm ở việc quyền lực của nhân dân được thể chế hóa, được bảo đảm bằng pháp luật, được tổ chức
@@ -619,7 +572,7 @@ const App = () => {
           </div>
         </section>
 
-        <section id="ket-luan" className="bg-[#171311] py-24 md:py-32">
+        <section id="ket-luan" className="bg-[#f7f4ee] py-24 md:py-32">
           <div className="mx-auto max-w-7xl px-6">
             <SectionHeading
               badge="Kết luận và khuyến nghị"
@@ -630,14 +583,14 @@ const App = () => {
             <div className="grid gap-8 lg:grid-cols-[1fr_0.95fr]">
               <motion.div
                 {...fadeUp}
-                className="rounded-[30px] border border-stone-800 bg-stone-950/75 p-8 md:p-10"
+                className="rounded-[30px] border border-stone-200 bg-white p-8 shadow-[0_20px_60px_rgba(15,23,42,0.06)] md:p-10"
               >
-                <p className="text-xl leading-9 text-stone-300">
+                <p className="text-xl leading-10 text-stone-600">
                   Nền dân chủ XHCN là một chỉnh thể thống nhất giữa lý luận và thực tiễn, giữa quyền lực và trách nhiệm,
                   giữa mục tiêu và phương tiện. Phát huy các tiện ích của mạng xã hội là cần thiết, nhưng không được nhầm
                   lẫn giữa công cụ truyền thông với bản chất chính trị - kinh tế của chế độ.
                 </p>
-                <p className="mt-6 text-lg leading-8 text-stone-400">
+                <p className="mt-6 text-lg leading-9 text-stone-600">
                   Chỉ khi Nhà nước pháp quyền XHCN hoạt động hiệu quả, quyền lực được nhân dân thực sự kiểm soát và lợi
                   ích phát triển hướng đến con người, dân chủ mới trở thành động lực mạnh mẽ cho một xã hội dân giàu,
                   nước mạnh, dân chủ, công bằng, văn minh.
@@ -647,14 +600,14 @@ const App = () => {
               <motion.div
                 {...fadeUp}
                 transition={{ ...fadeUp.transition, delay: 0.08 }}
-                className="rounded-[30px] border border-amber-900/35 bg-gradient-to-br from-amber-500/10 to-stone-950/80 p-8 md:p-10"
+                className="rounded-[30px] border border-stone-200 bg-white p-8 shadow-[0_20px_60px_rgba(15,23,42,0.06)] md:p-10"
               >
                 <div className="text-xs uppercase tracking-[0.28em] text-amber-300">Giải pháp trọng tâm</div>
                 <div className="mt-6 space-y-4">
                   {recommendations.map((item) => (
-                    <div key={item} className="flex gap-3 rounded-2xl border border-amber-900/30 bg-black/15 px-4 py-3">
-                      <CheckCircle2 className="mt-1 h-4 w-4 flex-none text-amber-300" />
-                      <span className="text-sm leading-7 text-stone-200">{item}</span>
+                    <div key={item} className="flex gap-3 rounded-2xl border border-stone-200 bg-stone-50 px-4 py-3">
+                      <CheckCircle2 className="mt-1 h-4 w-4 flex-none text-stone-700" />
+                      <span className="text-sm leading-7 text-stone-700">{item}</span>
                     </div>
                   ))}
                 </div>
@@ -663,7 +616,7 @@ const App = () => {
           </div>
         </section>
 
-        <section id="references" className="border-t border-white/6 bg-[#120f0d] py-20">
+        <section id="references" className="border-t border-stone-200 bg-[#fcfbf8] py-20">
           <div className="mx-auto max-w-7xl px-6">
             <SectionHeading
               badge="Tài liệu tham khảo"
@@ -680,11 +633,11 @@ const App = () => {
                   href={item.url}
                   target={item.url.startsWith('http') ? '_blank' : undefined}
                   rel={item.url.startsWith('http') ? 'noreferrer' : undefined}
-                  className="group rounded-[24px] border border-stone-800 bg-stone-950/70 px-6 py-5 transition-colors hover:border-amber-500/40"
+                  className="group rounded-[24px] border border-stone-200 bg-white px-6 py-5 transition-colors hover:border-stone-400"
                 >
                   <div className="flex items-start justify-between gap-4">
-                    <div className="text-base leading-8 text-stone-300 group-hover:text-stone-100">{item.title}</div>
-                    <ChevronRight className="mt-1 h-5 w-5 flex-none text-stone-600 transition-colors group-hover:text-amber-300" />
+                    <div className="text-base leading-8 text-stone-700 group-hover:text-stone-900">{item.title}</div>
+                    <ChevronRight className="mt-1 h-5 w-5 flex-none text-stone-500 transition-colors group-hover:text-stone-900" />
                   </div>
                 </motion.a>
               ))}
@@ -701,68 +654,27 @@ const App = () => {
                 Ứng dụng AI trong quá trình xây dựng nội dung và trình bày
               </h3>
               <p className="mt-4 max-w-4xl text-base leading-8 text-stone-400">
-                AI được sử dụng như một công cụ hỗ trợ để tổ chức thông tin, gợi ý cách trình bày và rà soát ngôn ngữ,
-                trong khi nội dung cuối cùng vẫn được kiểm tra, biên tập và hoàn thiện thủ công.
+                AI được sử dụng ở mức hỗ trợ để sắp xếp cấu trúc, gợi ý cách trình bày và rà soát diễn đạt; nội dung
+                cuối cùng vẫn được kiểm tra, biên tập và quyết định thủ công.
               </p>
 
-              <div className="mt-8 grid gap-4 md:grid-cols-2">
-                {aiUsageItems.map((item) => (
-                  <div key={item.title} className="rounded-2xl border border-stone-800 bg-black/15 p-5">
-                    <div className="text-sm font-semibold text-stone-100">{item.title}</div>
-                    <p className="mt-3 text-sm leading-7 text-stone-300">{item.body}</p>
+              <div className="mt-8 grid gap-4 md:grid-cols-3">
+                {[
+                  'Hỗ trợ tổ chức lại bố cục và nhóm luận điểm chính.',
+                  'Gợi ý cách trình bày bảng, thẻ thông tin và nhịp đọc nội dung.',
+                  'Toàn bộ đầu ra được đối chiếu lại với nguồn và biên tập thủ công.',
+                ].map((item) => (
+                  <div key={item} className="rounded-2xl border border-stone-200 bg-white p-5">
+                    <p className="text-sm leading-7 text-stone-700">{item}</p>
                   </div>
                 ))}
               </div>
 
-              <div className="mt-8 grid gap-6 lg:grid-cols-[1fr_1fr]">
-                <div className="rounded-2xl border border-stone-800 bg-black/15 p-6">
-                  <div className="text-sm font-semibold uppercase tracking-[0.22em] text-amber-300">
-                    Kiểm chứng nội dung
-                  </div>
-                  <p className="mt-4 text-sm leading-7 text-stone-300">
-                    Mọi gợi ý do AI đưa ra đều được đối chiếu với giáo trình LLCT, nghị quyết, văn bản chính thống
-                    và các nguồn tham khảo đã lựa chọn, nhằm bảo đảm độ tin cậy trước khi đưa vào bài trình bày.
-                  </p>
-                  <div className="mt-5 space-y-3">
-                    {officialChecks.map((item) => (
-                      <a
-                        key={item.title}
-                        href={item.url}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="block rounded-2xl border border-stone-800 bg-stone-950/70 px-4 py-4 transition-colors hover:border-amber-500/40"
-                      >
-                        <div className="text-sm font-semibold text-stone-100">{item.title}</div>
-                        <p className="mt-2 text-sm leading-7 text-stone-400">{item.detail}</p>
-                      </a>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="rounded-2xl border border-stone-800 bg-black/15 p-6">
-                  <div className="text-sm font-semibold uppercase tracking-[0.22em] text-amber-300">
-                    Nguyên tắc sử dụng
-                  </div>
-                  <div className="mt-4 space-y-3">
-                    {integrityItems.map((item) => (
-                      <div key={item} className="flex gap-3 rounded-2xl border border-stone-800 bg-stone-950/70 px-4 py-4">
-                        <CheckCircle2 className="mt-1 h-4 w-4 flex-none text-amber-300" />
-                        <p className="text-sm leading-7 text-stone-300">{item}</p>
-                      </div>
-                    ))}
-                  </div>
-                  <p className="mt-5 text-sm leading-7 text-stone-300">
-                    Vai trò của AI trong sản phẩm này tập trung ở hỗ trợ cấu trúc trình bày, gợi ý bảng so sánh, nhóm
-                    luận điểm, tinh chỉnh nhịp chữ và hỗ trợ trực quan hóa, thay vì thay thế toàn bộ quá trình phân tích nội dung.
-                  </p>
-                </div>
-              </div>
-
-              <div className="mt-8 rounded-2xl border border-emerald-900/40 bg-emerald-950/20 p-6">
-                <div className="text-sm font-semibold uppercase tracking-[0.22em] text-emerald-300">
+              <div className="mt-8 rounded-2xl border border-emerald-300 bg-emerald-50 p-6">
+                <div className="text-sm font-semibold uppercase tracking-[0.22em] text-emerald-800">
                   Cam kết sử dụng AI có trách nhiệm
                 </div>
-                <p className="mt-4 text-sm leading-7 text-stone-200">
+                <p className="mt-4 text-sm leading-7 text-stone-700">
                   AI chỉ đóng vai trò hỗ trợ trong việc gợi ý cấu trúc, hình thức trình bày, rà soát câu chữ và đề xuất
                   cách trực quan hóa nội dung. Việc chọn lọc lập luận, đối chiếu nguồn và quyết định nội dung cuối cùng
                   được thực hiện thủ công và chịu trách nhiệm bởi người biên soạn.
@@ -770,30 +682,6 @@ const App = () => {
               </div>
             </motion.div>
 
-            <motion.div
-              {...fadeUp}
-              transition={{ ...fadeUp.transition, delay: 0.16 }}
-              className="mt-8 rounded-[28px] border border-stone-800 bg-stone-950/60 p-8"
-            >
-              <div className="text-xs uppercase tracking-[0.28em] text-amber-300">Bối cảnh cập nhật</div>
-              <h3 className="mt-4 font-serif text-3xl text-stone-100">
-                Tính cập nhật và gắn kết với thực tiễn xã hội, kinh tế - chính trị hiện nay
-              </h3>
-              <div className="mt-6 grid gap-4 md:grid-cols-2">
-                {currentContextItems.map((item) => (
-                  <a
-                    key={item.title}
-                    href={item.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="rounded-2xl border border-stone-800 bg-black/15 p-5 transition-colors hover:border-amber-500/40"
-                  >
-                    <div className="text-base font-semibold text-stone-100">{item.title}</div>
-                    <p className="mt-3 text-sm leading-7 text-stone-300">{item.detail}</p>
-                  </a>
-                ))}
-              </div>
-            </motion.div>
           </div>
         </section>
       </main>

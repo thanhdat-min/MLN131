@@ -4,32 +4,32 @@
 @theme {
   --font-sans: "Manrope", "Segoe UI", sans-serif;
   --font-serif: "Cormorant Garamond", Georgia, serif;
-  --color-border: hsl(24, 16%, 18%);
-  --color-input: hsl(24, 16%, 18%);
-  --color-ring: hsl(36, 72%, 68%);
-  --color-background: hsl(24, 24%, 8%);
-  --color-foreground: hsl(32, 24%, 94%);
+  --color-border: hsl(30, 15%, 82%);
+  --color-input: hsl(30, 15%, 82%);
+  --color-ring: hsl(30, 14%, 45%);
+  --color-background: hsl(42, 33%, 98%);
+  --color-foreground: hsl(24, 10%, 18%);
 
-  --color-primary: hsl(36, 72%, 68%);
-  --color-primary-foreground: hsl(24, 24%, 8%);
+  --color-primary: hsl(24, 10%, 18%);
+  --color-primary-foreground: hsl(42, 33%, 98%);
 
-  --color-secondary: hsl(20, 15%, 16%);
-  --color-secondary-foreground: hsl(32, 24%, 94%);
+  --color-secondary: hsl(36, 28%, 93%);
+  --color-secondary-foreground: hsl(24, 10%, 18%);
 
   --color-destructive: hsl(0, 62%, 36%);
-  --color-destructive-foreground: hsl(32, 24%, 94%);
+  --color-destructive-foreground: hsl(42, 33%, 98%);
 
-  --color-muted: hsl(20, 14%, 14%);
-  --color-muted-foreground: hsl(28, 11%, 62%);
+  --color-muted: hsl(36, 28%, 93%);
+  --color-muted-foreground: hsl(25, 8%, 42%);
 
-  --color-accent: hsl(18, 20%, 18%);
-  --color-accent-foreground: hsl(32, 24%, 94%);
+  --color-accent: hsl(36, 28%, 93%);
+  --color-accent-foreground: hsl(24, 10%, 18%);
 
-  --color-popover: hsl(24, 24%, 8%);
-  --color-popover-foreground: hsl(32, 24%, 94%);
+  --color-popover: hsl(42, 33%, 98%);
+  --color-popover-foreground: hsl(24, 10%, 18%);
 
-  --color-card: hsl(20, 18%, 10%);
-  --color-card-foreground: hsl(32, 24%, 94%);
+  --color-card: hsl(0, 0%, 100%);
+  --color-card-foreground: hsl(24, 10%, 18%);
 
   --radius-lg: 0.5rem;
   --radius-md: calc(0.5rem - 2px);
@@ -57,8 +57,8 @@
     -webkit-font-smoothing: antialiased;
     line-height: 1.6;
     background-image:
-      radial-gradient(circle at top, rgba(180, 83, 9, 0.08), transparent 28%),
-      linear-gradient(180deg, #120f0d 0%, #171311 44%, #120f0d 100%);
+      radial-gradient(circle at top, rgba(120, 113, 108, 0.08), transparent 28%),
+      linear-gradient(180deg, #fcfbf8 0%, #f7f4ee 44%, #fcfbf8 100%);
   }
   h1,
   h2,
@@ -82,5 +82,40 @@
   }
   #root {
     min-height: 100vh;
+  }
+}
+
+@layer utilities {
+  .text-stone-100,
+  .text-stone-200 {
+    color: #1c1917 !important;
+  }
+
+  .text-stone-300,
+  .text-stone-400 {
+    color: #57534e !important;
+  }
+
+  .text-amber-300,
+  .text-amber-200 {
+    color: #44403c !important;
+  }
+
+  .border-stone-800,
+  .border-stone-800\/80,
+  .border-white\/6 {
+    border-color: #e7e5e4 !important;
+  }
+
+  .bg-stone-950\/60,
+  .bg-stone-950\/70,
+  .bg-stone-950\/75,
+  .bg-stone-950\/80,
+  .bg-stone-900\/60,
+  .bg-stone-900\/70,
+  .bg-stone-900\/80,
+  .bg-black\/15,
+  .bg-black\/20 {
+    background-color: rgba(255, 255, 255, 0.96) !important;
   }
 }
