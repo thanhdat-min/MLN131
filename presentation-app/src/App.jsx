@@ -181,38 +181,34 @@ const sources = [
     title: 'Mặt trận Tổ quốc - Sử dụng mạng xã hội giúp chính quyền gần dân',
     url: 'https://m.mattran.org.vn/hoat-dong-mat-tran-dia-phuong/su-dung-mang-xa-hoi-giup-chinh-quyen-gan-dan-10289.html',
   },
-  {
-    title: 'README.md của dự án lưu toàn bộ danh mục tài liệu trích dẫn',
-    url: '#references-note',
-  },
 ];
 
 const aiUsageItems = [
   {
     title: 'Công cụ AI và mục đích sử dụng',
     body:
-      'Sử dụng AI để hỗ trợ tái cấu trúc nội dung học thuật thành giao diện web, gợi ý phân cấp thông tin, tinh chỉnh tiêu đề, nhịp chữ, bố cục thuyết trình và đề xuất cách trình bày phần đối chiếu, tiêu chí, kết luận.',
+      'AI được dùng để hỗ trợ sắp xếp lại cấu trúc nội dung, gợi ý phân cấp thông tin, tinh chỉnh tiêu đề, nhịp chữ và cách trực quan hóa các luận điểm trọng tâm.',
   },
   {
-    title: 'Prompt chính đã dùng',
+    title: 'Hướng dẫn cốt lõi dành cho AI',
     body:
-      'Ví dụ prompt cốt lõi: “Tái cấu trúc nội dung README thành website trình bày mạch lạc, thể hiện rõ tiến trình lịch sử, bản chất dân chủ XHCN, tiêu chí quyền lực nhân dân, đánh giá vai trò mạng xã hội và phần kết luận; giữ phong cách học thuật, dễ thuyết trình”.',
+      'AI được định hướng theo yêu cầu: trình bày nội dung mạch lạc, làm rõ tiến trình lịch sử, bản chất dân chủ XHCN, tiêu chí quyền lực nhân dân, vai trò của không gian mạng và phần kết luận theo phong cách học thuật, dễ theo dõi.',
   },
   {
     title: 'Kết quả AI tạo ra',
     body:
-      'AI đề xuất cấu trúc section, thẻ thông tin, bảng so sánh, cụm luận điểm, phụ lục tài liệu tham khảo và cách tổ chức lại phần kết luận để người xem dễ theo dõi hơn trên website.',
+      'AI hỗ trợ đề xuất cấu trúc các phần trình bày, bảng so sánh, cụm luận điểm, khối thông tin nổi bật và phụ lục để người xem tiếp cận nội dung nhanh và rõ hơn.',
   },
   {
-    title: 'Phần sinh viên chỉnh sửa và hoàn thiện',
+    title: 'Khâu biên tập và hoàn thiện cuối cùng',
     body:
-      'Người thực hiện chọn lọc nội dung từ README, sửa câu chữ, bỏ phần không phù hợp, bổ sung nguồn ảnh, quyết định bố cục cuối cùng, kiểm tra chính tả, điều chỉnh giọng văn và chịu trách nhiệm về toàn bộ phiên bản trình bày cuối.',
+      'Nội dung sau khi có gợi ý từ AI được biên tập lại, rà lỗi, điều chỉnh giọng văn, bổ sung nguồn ảnh, chọn lọc lập luận và hoàn thiện bố cục để bảo đảm tính chính xác và chất lượng trình bày.',
   },
 ];
 
 const integrityItems = [
   'Cam kết bằng văn bản: AI chỉ là công cụ hỗ trợ, không thay thế toàn bộ quá trình học tập, phân tích và biên soạn.',
-  'Phân định rõ ràng giữa đầu ra AI và phần sinh viên chỉnh sửa, tổng hợp, kiểm tra và quyết định sử dụng.',
+  'Phân định rõ ràng giữa đầu ra AI và phần biên tập, tổng hợp, kiểm tra và quyết định sử dụng.',
   'Đối chiếu thông tin do AI gợi ý với giáo trình LLCT, nghị quyết, văn bản chính thống và các nguồn đã trích dẫn trên website.',
 ];
 
@@ -317,9 +313,9 @@ const App = () => {
                   Bản chất của nền dân chủ xã hội chủ nghĩa và vai trò của không gian mạng
                 </h1>
                 <p className="mt-8 max-w-3xl text-xl leading-9 text-stone-300">
-                  Nội dung được tổ chức lại theo mạch lập luận trong README.md, đi từ tiến trình lịch sử,
-                  bản chất của nền dân chủ XHCN, tiêu chí nhận diện quyền lực nhân dân đến việc phân tích
-                  nhận định về vai trò của mạng xã hội trong đời sống chính trị - xã hội.
+                  Bài trình bày đi từ tiến trình lịch sử của các hình thái dân chủ, đến bản chất của nền dân chủ
+                  xã hội chủ nghĩa, các tiêu chí nhận diện quyền lực nhân dân và cách nhìn nhận vai trò của mạng
+                  xã hội trong đời sống chính trị - xã hội hiện nay.
                 </p>
 
                 <div className="mt-10 flex flex-wrap gap-4">
@@ -376,7 +372,7 @@ const App = () => {
               {
                 icon: CircleDashed,
                 title: 'Mạch nội dung đầy đủ',
-                text: 'Website bám sát đầy đủ các khối nội dung trong README, tránh bỏ sót phần tiêu chí và khuyến nghị.',
+                text: 'Nội dung được triển khai theo một mạch rõ ràng từ nền tảng lý luận đến đối chiếu, đánh giá và kết luận.',
               },
               {
                 icon: ShieldCheck,
@@ -408,7 +404,7 @@ const App = () => {
             <SectionHeading
               badge="Tiến trình lịch sử"
               title="Sự tiến hóa của các hình thái dân chủ trong lịch sử nhân loại"
-              description="README nhấn mạnh rằng sự phát triển của dân chủ luôn gắn với phương thức sản xuất và đấu tranh giai cấp. Vì vậy phần này giữ vai trò nền tảng, đặt bối cảnh cho toàn bộ nội dung phía sau."
+              description="Sự phát triển của dân chủ luôn gắn với phương thức sản xuất và đấu tranh giai cấp. Phần này giữ vai trò nền tảng, đặt bối cảnh cho toàn bộ nội dung phía sau."
               align="center"
             />
 
@@ -466,8 +462,8 @@ const App = () => {
           <div className="mx-auto max-w-7xl px-6">
             <SectionHeading
               badge="Bản chất dân chủ XHCN"
-              title="Ba phương diện cốt lõi theo mạch lập luận của README"
-              description="Đây là nội dung trung tâm của bài. Giao diện được chuyển thành ba thẻ lớn để người xem có thể đọc độc lập từng phương diện mà không bị chìm trong các đoạn văn dài."
+              title="Ba phương diện cốt lõi của nền dân chủ xã hội chủ nghĩa"
+              description="Đây là nội dung trung tâm của bài trình bày, được chia thành ba phương diện lớn để người xem theo dõi rõ từng lớp lập luận."
             />
 
             <div className="grid gap-6 lg:grid-cols-3">
@@ -500,7 +496,7 @@ const App = () => {
             <SectionHeading
               badge="Đối chiếu bản chất"
               title="So sánh dân chủ tư sản và dân chủ xã hội chủ nghĩa"
-              description="README có một bảng tiêu chí ngắn nhưng quan trọng. Ở giao diện mới, bảng được đưa ra thành trọng tâm riêng để người xem dễ nhìn ra sự khác biệt cốt lõi về chủ thể quyền lực, cơ sở kinh tế và mục tiêu chính trị."
+              description="Bảng đối chiếu này làm nổi bật sự khác biệt cốt lõi về chủ thể quyền lực, cơ sở kinh tế và mục tiêu chính trị giữa hai mô hình dân chủ."
             />
 
             <motion.div
@@ -528,7 +524,7 @@ const App = () => {
             <SectionHeading
               badge="Tiêu chí nhận diện"
               title="Khi nào có thể nói quyền lực thực sự thuộc về nhân dân?"
-              description="Thay vì để phần này chìm trong văn bản, giao diện mới tách ba nhóm tiêu chí thành các khối trực quan. Đây là phần trước đây website chưa thể hiện đầy đủ so với README."
+              description="Ba nhóm tiêu chí dưới đây giúp nhận diện quyền lực nhân dân không chỉ ở khẩu hiệu mà trong cơ chế vận hành và kiểm soát quyền lực trên thực tế."
             />
 
             <div className="grid gap-6 md:grid-cols-3">
@@ -553,7 +549,7 @@ const App = () => {
             <SectionHeading
               badge="Không gian mạng"
               title="Nhận định về mạng xã hội: đúng một phần, nhưng không phải bản chất tối cao"
-              description="README kết luận rõ rằng phát biểu “mạng xã hội là biểu hiện cao nhất của dân chủ XHCN” chỉ đúng một phần. Vì vậy giao diện được thiết kế theo thế đối chiếu: phần hợp lý ở bên trái, phần cần phản biện ở bên phải."
+              description="Phát biểu “mạng xã hội là biểu hiện cao nhất của dân chủ XHCN” chỉ phản ánh được một phần thực tế. Phần dưới đây tách rõ mặt tích cực và những giới hạn cần nhìn nhận."
             />
 
             <div className="grid gap-6 lg:grid-cols-2">
@@ -628,7 +624,7 @@ const App = () => {
             <SectionHeading
               badge="Kết luận và khuyến nghị"
               title="Xây dựng nền dân chủ xã hội chủ nghĩa trong thời đại số"
-              description="README kết thúc bằng một phần khuyến nghị rất rõ. Phần này được đặt thành một khối riêng để bài thuyết trình có điểm kết mạch lạc và dễ chốt thông điệp."
+              description="Phần kết này nhấn mạnh mối quan hệ giữa dân chủ, pháp quyền, trách nhiệm công dân và việc sử dụng công nghệ trong bối cảnh xã hội số."
             />
 
             <div className="grid gap-8 lg:grid-cols-[1fr_0.95fr]">
@@ -671,8 +667,8 @@ const App = () => {
           <div className="mx-auto max-w-7xl px-6">
             <SectionHeading
               badge="Tài liệu tham khảo"
-              title="Nguồn chính dùng để cấu trúc lại nội dung website"
-              description="README vẫn là nơi lưu đầy đủ danh mục tài liệu. Phần dưới đây chỉ chọn các nguồn đại diện để người xem có điểm bám nhanh ngay trên giao diện."
+              title="Một số nguồn tham khảo chính"
+              description="Các nguồn dưới đây là những điểm tựa quan trọng để đối chiếu lập luận về dân chủ xã hội chủ nghĩa, quyền lực nhân dân và vai trò của không gian mạng."
             />
 
             <div className="grid gap-4">
@@ -702,11 +698,11 @@ const App = () => {
             >
               <div className="text-xs uppercase tracking-[0.28em] text-amber-300">AI Usage</div>
               <h3 className="mt-4 font-serif text-3xl text-stone-100">
-                Ứng dụng AI có trách nhiệm, minh bạch, sáng tạo và bảo đảm liêm chính học thuật
+                Ứng dụng AI trong quá trình xây dựng nội dung và trình bày
               </h3>
               <p className="mt-4 max-w-4xl text-base leading-8 text-stone-400">
-                Phụ lục này công khai cách AI được sử dụng trong quá trình xây dựng website, đồng thời xác định rõ
-                phạm vi hỗ trợ của AI, phần do sinh viên chỉnh sửa và trách nhiệm cuối cùng đối với nội dung trình bày.
+                AI được sử dụng như một công cụ hỗ trợ để tổ chức thông tin, gợi ý cách trình bày và rà soát ngôn ngữ,
+                trong khi nội dung cuối cùng vẫn được kiểm tra, biên tập và hoàn thiện thủ công.
               </p>
 
               <div className="mt-8 grid gap-4 md:grid-cols-2">
@@ -721,12 +717,11 @@ const App = () => {
               <div className="mt-8 grid gap-6 lg:grid-cols-[1fr_1fr]">
                 <div className="rounded-2xl border border-stone-800 bg-black/15 p-6">
                   <div className="text-sm font-semibold uppercase tracking-[0.22em] text-amber-300">
-                    Kiểm chứng và trách nhiệm nội dung
+                    Kiểm chứng nội dung
                   </div>
                   <p className="mt-4 text-sm leading-7 text-stone-300">
-                    Mọi nội dung do AI gợi ý đều được đối chiếu với giáo trình LLCT, nghị quyết, văn bản chính thống
-                    và các nguồn đã trích dẫn. Người thực hiện chịu trách nhiệm về nội dung cuối cùng, không chuyển giao
-                    toàn bộ việc phân tích học thuật cho AI.
+                    Mọi gợi ý do AI đưa ra đều được đối chiếu với giáo trình LLCT, nghị quyết, văn bản chính thống
+                    và các nguồn tham khảo đã lựa chọn, nhằm bảo đảm độ tin cậy trước khi đưa vào bài trình bày.
                   </p>
                   <div className="mt-5 space-y-3">
                     {officialChecks.map((item) => (
@@ -746,7 +741,7 @@ const App = () => {
 
                 <div className="rounded-2xl border border-stone-800 bg-black/15 p-6">
                   <div className="text-sm font-semibold uppercase tracking-[0.22em] text-amber-300">
-                    Liêm chính học thuật và ứng dụng sáng tạo
+                    Nguyên tắc sử dụng
                   </div>
                   <div className="mt-4 space-y-3">
                     {integrityItems.map((item) => (
@@ -757,20 +752,20 @@ const App = () => {
                     ))}
                   </div>
                   <p className="mt-5 text-sm leading-7 text-stone-300">
-                    Ứng dụng sáng tạo của AI trong sản phẩm này nằm ở việc hỗ trợ tạo cấu trúc trình bày web, gợi ý bảng
-                    so sánh, nhóm luận điểm, nhịp trình bày và phụ lục minh bạch; AI không viết thay toàn bộ nội dung học thuật.
+                    Vai trò của AI trong sản phẩm này tập trung ở hỗ trợ cấu trúc trình bày, gợi ý bảng so sánh, nhóm
+                    luận điểm, tinh chỉnh nhịp chữ và hỗ trợ trực quan hóa, thay vì thay thế toàn bộ quá trình phân tích nội dung.
                   </p>
                 </div>
               </div>
 
               <div className="mt-8 rounded-2xl border border-emerald-900/40 bg-emerald-950/20 p-6">
                 <div className="text-sm font-semibold uppercase tracking-[0.22em] text-emerald-300">
-                  Cam kết bằng văn bản
+                  Cam kết sử dụng AI có trách nhiệm
                 </div>
                 <p className="mt-4 text-sm leading-7 text-stone-200">
-                  Nhóm cam kết AI chỉ đóng vai trò hỗ trợ trong việc gợi ý cấu trúc, hình thức trình bày, rà soát câu chữ
-                  và đề xuất cách trực quan hóa nội dung. Phần phân tích, chọn lọc lập luận, đối chiếu nguồn chính thống
-                  và quyết định nội dung cuối cùng do sinh viên thực hiện và chịu trách nhiệm.
+                  AI chỉ đóng vai trò hỗ trợ trong việc gợi ý cấu trúc, hình thức trình bày, rà soát câu chữ và đề xuất
+                  cách trực quan hóa nội dung. Việc chọn lọc lập luận, đối chiếu nguồn và quyết định nội dung cuối cùng
+                  được thực hiện thủ công và chịu trách nhiệm bởi người biên soạn.
                 </p>
               </div>
             </motion.div>
